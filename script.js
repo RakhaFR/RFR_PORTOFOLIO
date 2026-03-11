@@ -1,4 +1,83 @@
 /***********************************
+ =====   PAGE LOADER / LAZY LOAD ===
+ ***********************************/
+(function () {
+  const loader  = document.getElementById("page-loader");
+  const bar     = document.getElementById("loaderBar");
+  const percent = document.getElementById("loaderPercent");
+
+  // Lock scroll while loading
+  document.body.classList.add("loading");
+
+  function setProgress(p) {
+    const v = Math.min(Math.round(p), 100);
+    if (bar)     bar.style.width = v + "%";
+    if (percent) percent.textContent = v + "%";
+  }
+
+  function hideLoader() {
+    setProgress(100);
+    setTimeout(() => {
+      loader.classList.add("hidden");
+      document.body.classList.remove("loading");
+    }, 600);
+  }
+
+  // ── Lazy-load all images with data-src ──
+  function lazyLoadImages() {
+    // Convert all <img src="..."> to lazy (data-src) except tiny icons
+    const imgs = Array.from(document.querySelectorAll("img[src]")).filter(
+      (img) => !img.closest("#page-loader") && !img.hasAttribute("data-eager")
+    );
+
+    if (imgs.length === 0) { hideLoader(); return; }
+
+    let loaded = 0;
+    let fakeProgress = 5;
+
+    // Fake initial crawl so bar isn't stuck at 0
+    const fakeInterval = setInterval(() => {
+      if (fakeProgress < 30) {
+        fakeProgress += 3;
+        setProgress(fakeProgress);
+      } else {
+        clearInterval(fakeInterval);
+      }
+    }, 120);
+
+    imgs.forEach((img) => {
+      // Save real src, swap to blank so we control timing
+      const realSrc = img.getAttribute("src");
+      img.setAttribute("data-src", realSrc);
+      img.removeAttribute("src");
+
+      const tempImg = new Image();
+      tempImg.onload = tempImg.onerror = () => {
+        loaded++;
+        img.setAttribute("src", realSrc);      // restore
+        const progress = 30 + (loaded / imgs.length) * 70;
+        setProgress(progress);
+        if (loaded === imgs.length) {
+          clearInterval(fakeInterval);
+          hideLoader();
+        }
+      };
+      tempImg.src = realSrc;
+    });
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", lazyLoadImages);
+  } else {
+    lazyLoadImages();
+  }
+
+  // Safety fallback: force-hide after 6 seconds regardless
+  setTimeout(hideLoader, 6000);
+})();
+
+/***********************************
  =====   Active navbar (scroll) ====
  ***********************************/
 const sections  = document.querySelectorAll("section[id]");

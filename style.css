@@ -1,5 +1,124 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
 
+/* ─── Page Loader ───────────────────────────────── */
+#page-loader {
+  position: fixed;
+  inset: 0;
+  background: #020c14;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.loader-defs-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.loader-text {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.letter-svg {
+  width: 56px;
+  height: 56px;
+  filter: drop-shadow(0 0 12px rgba(0,200,255,0.5));
+}
+
+@media (max-width: 480px) {
+  .letter-svg { width: 40px; height: 40px; }
+}
+
+/* reuse the same dash/spin keyframes */
+#page-loader .dash {
+  animation: ld-dashArray 2s ease-in-out infinite,
+             ld-dashOffset 2s linear infinite;
+}
+
+#page-loader .spin {
+  animation: ld-spinDashArray 2s ease-in-out infinite,
+             ld-spin 8s ease-in-out infinite,
+             ld-dashOffset 2s linear infinite;
+  transform-origin: center;
+}
+
+/* stagger each letter */
+.loader-text .letter-svg:nth-child(1) { animation-delay: 0s; }
+.loader-text .letter-svg:nth-child(2) { animation-delay: 0.1s; }
+.loader-text .letter-svg:nth-child(3) { animation-delay: 0.2s; }
+.loader-text .letter-svg:nth-child(4) { animation-delay: 0.3s; }
+.loader-text .letter-svg:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes ld-dashArray {
+  0%   { stroke-dasharray: 0 1 359 0; }
+  50%  { stroke-dasharray: 0 359 1 0; }
+  100% { stroke-dasharray: 359 1 0 0; }
+}
+@keyframes ld-spinDashArray {
+  0%   { stroke-dasharray: 270 90; }
+  50%  { stroke-dasharray: 0 360; }
+  100% { stroke-dasharray: 270 90; }
+}
+@keyframes ld-dashOffset {
+  0%   { stroke-dashoffset: 365; }
+  100% { stroke-dashoffset: 5; }
+}
+@keyframes ld-spin {
+  0%            { rotate: 0deg; }
+  12.5%, 25%    { rotate: 270deg; }
+  37.5%, 50%    { rotate: 540deg; }
+  62.5%, 75%    { rotate: 810deg; }
+  87.5%, 100%   { rotate: 1080deg; }
+}
+
+/* Progress bar */
+.loader-progress-wrap {
+  width: 220px;
+  height: 3px;
+  background: rgba(0,200,255,0.1);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.loader-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00c8ff, #00ffc8);
+  border-radius: 99px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,200,255,0.6);
+}
+
+.loader-percent {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  color: rgba(0,200,255,0.6);
+  letter-spacing: 0.1em;
+}
+
+/* freeze scroll while loading */
+body.loading {
+  overflow: hidden;
+}
+
 /* ─── CSS Variables ────────────────────────────── */
 :root {
   --bg-deep:    #020c14;

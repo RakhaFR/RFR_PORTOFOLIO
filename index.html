@@ -15,6 +15,73 @@
 
 <body>
 
+  <!-- ── Page Loader ───────────────────────────── -->
+  <div id="page-loader">
+    <div class="loader-inner">
+      <svg height="0" width="0" viewBox="0 0 64 64" class="loader-defs-svg">
+        <defs xmlns="http://www.w3.org/2000/svg">
+          <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-b">
+            <stop stop-color="#00c8ff"></stop>
+            <stop stop-color="#00ffc8" offset="1"></stop>
+          </linearGradient>
+          <linearGradient gradientUnits="userSpaceOnUse" y2="0" x2="0" y1="64" x1="0" id="ld-c">
+            <stop stop-color="#00c8ff"></stop>
+            <stop stop-color="#00ffc8" offset="1"></stop>
+            <animateTransform repeatCount="indefinite"
+              keySplines=".42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1"
+              keyTimes="0; 0.125; 0.25; 0.375; 0.5; 0.625; 0.75; 0.875; 1" dur="8s"
+              values="0 32 32;-270 32 32;-270 32 32;-540 32 32;-540 32 32;-810 32 32;-810 32 32;-1080 32 32;-1080 32 32"
+              type="rotate" attributeName="gradientTransform"></animateTransform>
+          </linearGradient>
+          <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-d">
+            <stop stop-color="#00ffc8"></stop>
+            <stop stop-color="#00c8ff" offset="1"></stop>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Animated text: R-a-k-h-a -->
+      <div class="loader-text">
+        <!-- R -->
+        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="360"
+            d="M 12,8 L 12,56 M 12,8 L 38,8 C 46,8 52,14 52,22 C 52,30 46,36 38,36 L 12,36 M 34,36 L 52,56"/>
+        </svg>
+        <!-- a -->
+        <svg class="letter-svg spin-letter" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="spin" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="360"
+            d="M 48,22 C 48,22 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z"/>
+        </svg>
+        <!-- k -->
+        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="360"
+            d="M 14,8 L 14,56 M 14,32 L 46,8 M 14,32 L 46,56"/>
+        </svg>
+        <!-- h -->
+        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="dash" stroke="url(#ld-d)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="360"
+            d="M 12,8 L 12,56 M 12,28 C 12,28 20,16 34,16 C 44,16 50,22 50,32 L 50,56"/>
+        </svg>
+        <!-- a -->
+        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="dash" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="360"
+            d="M 48,16 C 48,16 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z"/>
+        </svg>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="loader-progress-wrap">
+        <div class="loader-progress-bar" id="loaderBar"></div>
+      </div>
+      <div class="loader-percent" id="loaderPercent">0%</div>
+    </div>
+  </div>
+
   <!-- ── Header ─────────────────────────────────── -->
   <header class="header">
     <a href="" class="logo">Rakha<span style="color:var(--accent)">.</span></a>
