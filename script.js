@@ -545,6 +545,11 @@ window.addEventListener("scroll", () => {
         // Toggle bottom input area
         chatInputBlocked.style.display = "none";
         chatInputWrapper.style.display = "flex";
+        chatInputText.disabled = false;
+        btnSendMessage.disabled = false;
+        
+        // Bersihkan data tiruan sebelum meload data asli
+        chatMessages.innerHTML = '';
         
         // Mulai sinkronisasi chat real-time
         startChatStream();
@@ -564,6 +569,8 @@ window.addEventListener("scroll", () => {
         // Toggle bottom input area
         chatInputWrapper.style.display = "none";
         chatInputBlocked.style.display = "flex";
+        chatInputText.disabled = true;
+        btnSendMessage.disabled = true;
         
         if (unsubscribeChat) {
           unsubscribeChat();
@@ -571,7 +578,7 @@ window.addEventListener("scroll", () => {
         }
 
         // Tampilkan obrolan tiruan statis agar tidak kosong
-        loadFakeChats();
+        renderFakeChats();
       }
     });
 
@@ -660,12 +667,13 @@ window.addEventListener("scroll", () => {
     }
 
     // ─── D2. Load Fake Chats (Mode Guest/Belum Login) ───
-    function loadFakeChats() {
+    function renderFakeChats() {
       if (unsubscribeChat) {
         unsubscribeChat();
         unsubscribeChat = null;
       }
       
+      // Hapus spinner loader
       chatMessages.innerHTML = '';
       
       const fakeData = [
@@ -690,19 +698,20 @@ window.addEventListener("scroll", () => {
       ];
 
       fakeData.forEach((data, index) => {
-        renderMessage(`fake-${index}`, data);
+        // Teruskan true agar bubble chat memiliki class preview
+        renderMessage(`fake-${index}`, data, true);
       });
       
       scrollToBottom();
     }
 
     // ─── E. Render Message Bubble ───
-    function renderMessage(id, data) {
+    function renderMessage(id, data, isPreview = false) {
       const isMine = currentUser && (data.senderName === currentUser.displayName || data.senderName === currentUser.email);
       
       const bubble = document.createElement("div");
       bubble.id = `msg-${id}`;
-      bubble.className = `chat-bubble ${isMine ? 'mine' : ''}`;
+      bubble.className = `chat-bubble ${isMine ? 'mine' : ''} ${isPreview ? 'preview-chat' : ''}`;
 
       let formattedTime = "Baru saja";
       if (data.timestamp) {

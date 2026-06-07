@@ -1977,4 +1977,11 @@ footer {
   .chat-header-user {
     padding: 1.2rem 1.6rem;
   }
+}
+
+/* Chat bubble preview mode style (untuk belum login) */
+.chat-bubble.preview-chat {
+  opacity: 0.6;
+  filter: blur(0.5px);
+  pointer-events: none;
 }
