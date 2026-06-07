@@ -498,13 +498,18 @@ window.addEventListener("scroll", () => {
   }, 100);
 
   function setupChatApp() {
-    const chatAuthPrompt = document.getElementById("chat-auth-prompt");
-    const chatPanel      = document.getElementById("chat-panel");
+    // Header containers
+    const chatHeaderUserInfo  = document.getElementById("chat-header-user-info");
+    const chatHeaderGuestInfo = document.getElementById("chat-header-guest-info");
     
     // Buttons
     const btnLoginGoogle = document.getElementById("btn-login-google");
     const btnLogout      = document.getElementById("btn-logout");
     const btnSendMessage = document.getElementById("btn-send-message");
+    
+    // Input wrappers
+    const chatInputWrapper = document.getElementById("chat-input-wrapper");
+    const chatInputBlocked = document.getElementById("chat-input-blocked");
     
     // User info
     const chatUserPhoto  = document.getElementById("chat-user-photo");
@@ -529,8 +534,17 @@ window.addEventListener("scroll", () => {
         chatUserName.textContent = user.displayName || "Anonymous";
         chatUserPhoto.src = user.photoURL || "https://api.dicebear.com/7.x/adventurer/svg?seed=guest";
         
-        chatAuthPrompt.classList.remove("active");
-        chatPanel.classList.add("active");
+        // Toggle header info
+        chatHeaderGuestInfo.style.display = "none";
+        chatHeaderUserInfo.style.display = "flex";
+        
+        // Toggle header buttons
+        btnLoginGoogle.style.display = "none";
+        btnLogout.style.display = "flex";
+        
+        // Toggle bottom input area
+        chatInputBlocked.style.display = "none";
+        chatInputWrapper.style.display = "flex";
         
         // Mulai sinkronisasi chat real-time
         startChatStream();
@@ -539,13 +553,25 @@ window.addEventListener("scroll", () => {
         chatUserName.textContent = "Loading...";
         chatUserPhoto.src = "";
         
-        chatPanel.classList.remove("active");
-        chatAuthPrompt.classList.add("active");
+        // Toggle header info
+        chatHeaderUserInfo.style.display = "none";
+        chatHeaderGuestInfo.style.display = "flex";
+        
+        // Toggle header buttons
+        btnLogout.style.display = "none";
+        btnLoginGoogle.style.display = "inline-flex";
+        
+        // Toggle bottom input area
+        chatInputWrapper.style.display = "none";
+        chatInputBlocked.style.display = "flex";
         
         if (unsubscribeChat) {
           unsubscribeChat();
           unsubscribeChat = null;
         }
+
+        // Tampilkan obrolan tiruan statis agar tidak kosong
+        loadFakeChats();
       }
     });
 
@@ -631,6 +657,43 @@ window.addEventListener("scroll", () => {
             </div>
           `;
         });
+    }
+
+    // ─── D2. Load Fake Chats (Mode Guest/Belum Login) ───
+    function loadFakeChats() {
+      if (unsubscribeChat) {
+        unsubscribeChat();
+        unsubscribeChat = null;
+      }
+      
+      chatMessages.innerHTML = '';
+      
+      const fakeData = [
+        {
+          senderName: "Rakha FR",
+          senderPhoto: "https://i.pinimg.com/736x/bd/6d/f7/bd6df73658dc4fffa2022b47a66eb61f.jpg",
+          messageText: "kalian bisa chat disini teman teman!",
+          timestamp: { toDate: () => new Date(Date.now() - 1000 * 60 * 30) } // 30 menit lalu
+        },
+        {
+          senderName: "Rakha Fr",
+          senderPhoto: "https://rakhafr.github.io/RFR_PORTOFOLIO/img/hero.jpeg",
+          messageText: "akun ke 2 testing!!",
+          timestamp: { toDate: () => new Date(Date.now() - 1000 * 60 * 15) } // 15 menit lalu
+        },
+        {
+          senderName: "Xzea",
+          senderPhoto: "https://i.pinimg.com/1200x/97/f6/eb/97f6ebf655cfbaeeff728a10d310a96b.jpg",
+          messageText: "MANTAP NGABB!!!",
+          timestamp: { toDate: () => new Date(Date.now() - 1000 * 60 * 5) } // 5 menit lalu
+        }
+      ];
+
+      fakeData.forEach((data, index) => {
+        renderMessage(`fake-${index}`, data);
+      });
+      
+      scrollToBottom();
     }
 
     // ─── E. Render Message Bubble ───

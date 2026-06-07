@@ -1491,65 +1491,87 @@ footer {
 .chat-state-panel {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  transform: translateY(15px);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.chat-state-panel.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-/* Auth Prompt State */
-#chat-auth-prompt {
-  background: var(--glass-bg);
-}
-
-.chat-auth-content {
-  margin: auto;
-  max-width: 450px;
-  padding: 3rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.chat-auth-content .auth-icon {
-  font-size: 6.5rem;
-  color: var(--accent);
-  background: var(--accent-glow);
-  padding: 2rem;
+/* Guest Avatar Placeholder */
+.user-avatar-placeholder {
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  animation: floatChatIcon 4s ease-in-out infinite;
-  text-shadow: 0 0 20px var(--accent);
-  box-shadow: 0 0 30px rgba(0, 200, 255, 0.1);
-}
-
-@keyframes floatChatIcon {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(5deg); }
-}
-
-.chat-auth-content h3 {
-  font-family: var(--font-display);
-  font-size: 2.8rem;
-  color: var(--text-primary);
-  font-weight: 700;
-}
-
-.chat-auth-content p {
-  font-size: 1.4rem;
+  border: 2px solid var(--text-dim);
+  background: var(--bg-panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-muted);
-  line-height: 1.7;
+  box-shadow: 0 0 10px rgba(74, 122, 148, 0.2);
+}
+
+.user-avatar-placeholder i {
+  font-size: 2.2rem;
+}
+
+/* Premium Google Button Header Override */
+.btn-google-header {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  background: #ffffff;
+  color: #1f1f1f;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: auto;
+  height: auto;
+  padding: 0.8rem 1.6rem;
+  margin: 0;
+  border-radius: var(--radius-md);
+  border: 1px solid #e1e1e1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.btn-google-header:hover {
+  background: #f7f7f7;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1), 0 0 10px rgba(0, 200, 255, 0.2);
+}
+
+.btn-google-header svg {
+  flex-shrink: 0;
+}
+
+.btn-google-header span {
+  color: #1f1f1f !important;
+}
+
+/* Chat Input Blocked Guest Teks Overlay */
+.chat-input-blocked-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.2rem;
+  border-radius: 30px;
+  background: rgba(2, 12, 20, 0.5);
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  font-family: var(--font-body);
+  text-align: center;
+  width: 100%;
+}
+
+/* Chat Input Wrapper */
+.chat-input-inner-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
 }
 
 /* Premium Google Button Override */
