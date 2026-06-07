@@ -339,3 +339,402 @@ document.querySelectorAll(".heading").forEach((h) => {
   h.style.transition = "opacity 0.7s ease, transform 0.7s ease";
   headingObserver.observe(h);
 });
+
+/* ── 9. Three.js Interactive 3D Background ── */
+(function initThreeJS() {
+  const container = document.getElementById("hero-3d-container");
+  if (!container) return;
+
+  // Scene
+  const scene = new THREE.Scene();
+
+  // Camera
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  // Renderer
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Particles Geometry
+  const particlesCount = 1200;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particlesCount * 3);
+  const colors = new Float32Array(particlesCount * 3);
+
+  // Tema warna yang harmonis: warna accent (#00c8ff) dan accent2 (#00ffc8)
+  const color1 = new THREE.Color('#00c8ff');
+  const color2 = new THREE.Color('#00ffc8');
+
+  for (let i = 0; i < particlesCount * 3; i += 3) {
+    // Random positions
+    positions[i] = (Math.random() - 0.5) * 12;     // X
+    positions[i + 1] = (Math.random() - 0.5) * 12; // Y
+    positions[i + 2] = (Math.random() - 0.5) * 12; // Z
+
+    // Interpolasi warna acak antara color1 dan color2
+    const mixedColor = color1.clone().lerp(color2, Math.random());
+    colors[i] = mixedColor.r;
+    colors[i + 1] = mixedColor.g;
+    colors[i + 2] = mixedColor.b;
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  // Circular texture generator (agar partikel berbentuk lingkaran halus, bukan kotak)
+  const createCircleTexture = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+    const grad = ctx.createRadialGradient(8, 8, 0, 8, 8, 8);
+    grad.addColorStop(0, 'rgba(255,255,255,1)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 16, 16);
+    return new THREE.CanvasTexture(canvas);
+  };
+
+  // Material
+  const material = new THREE.PointsMaterial({
+    size: 0.04,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.75,
+    map: createCircleTexture(),
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+
+  // Points Mesh
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+
+  // Interaktivitas Mouse
+  let mouseX = 0;
+  let mouseY = 0;
+  let targetX = 0;
+  let targetY = 0;
+
+  const windowHalfX = window.innerWidth / 2;
+  const windowHalfY = window.innerHeight / 2;
+
+  const onMouseMove = (e) => {
+    mouseX = (e.clientX - windowHalfX) * 0.001;
+    mouseY = (e.clientY - windowHalfY) * 0.001;
+  };
+
+  window.addEventListener('mousemove', onMouseMove);
+
+  // Render Loop
+  const clock = new THREE.Clock();
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+
+    const elapsedTime = clock.getElapsedTime();
+
+    // Rotasi partikel otomatis yang lambat
+    points.rotation.y = elapsedTime * 0.05;
+    points.rotation.x = elapsedTime * 0.02;
+
+    // Easing pergeseran mouse
+    targetX += (mouseX - targetX) * 0.05;
+    targetY += (mouseY - targetY) * 0.05;
+
+    points.rotation.y += targetX * 0.5;
+    points.rotation.x += targetY * 0.5;
+
+    renderer.render(scene, camera);
+  };
+
+  animate();
+
+  // Handle Resize
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+
+/* ── 10. Smooth Layout Scroll Parallax (Depth) ── */
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  
+  // Hero section elements parallax translation
+  const heroText = document.querySelector(".home-content .content");
+  const heroImage = document.querySelector(".home-content .blob-frame");
+  if (heroText && window.innerWidth > 768) {
+    heroText.style.transform = `translateY(${scrollY * 0.15}px)`;
+  }
+  if (heroImage && window.innerWidth > 768) {
+    heroImage.style.transform = `translateY(${scrollY * 0.08}px)`;
+  }
+
+  // About section heading parallax shift
+  const aboutSection = document.querySelector(".about");
+  const aboutTitle = document.querySelector(".sub-main h2");
+  if (aboutSection && aboutTitle) {
+    const rect = aboutSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      const offset = (window.innerHeight - rect.top) * 0.05;
+      aboutTitle.style.transform = `translateY(${offset}px)`;
+    }
+  }
+}, { passive: true });
+
+/* ── 11. Firebase Real-Time Chat Room ── */
+(function initFirebaseChat() {
+  // Tunggu Firebase selesai diinisialisasi dari firebase-config.js
+  const checkFirebase = setInterval(() => {
+    if (window.auth && window.db) {
+      clearInterval(checkFirebase);
+      setupChatApp();
+    }
+  }, 100);
+
+  function setupChatApp() {
+    const chatAuthPrompt = document.getElementById("chat-auth-prompt");
+    const chatPanel      = document.getElementById("chat-panel");
+    
+    // Buttons
+    const btnLoginGoogle = document.getElementById("btn-login-google");
+    const btnLogout      = document.getElementById("btn-logout");
+    const btnSendMessage = document.getElementById("btn-send-message");
+    
+    // User info
+    const chatUserPhoto  = document.getElementById("chat-user-photo");
+    const chatUserName   = document.getElementById("chat-user-name");
+    
+    // Message container & Form
+    const chatMessages   = document.getElementById("chat-messages");
+    const chatForm       = document.getElementById("chat-form");
+    const chatInputText  = document.getElementById("chat-input-text");
+    const chatCharCounter = document.getElementById("chat-char-counter");
+
+    let unsubscribeChat = null;
+    let currentUser = null;
+    let lastSentTime = 0;
+    const cooldownMs = 2000; // 2 seconds cooldown untuk mencegah spam
+
+    // ─── A. Listen Auth State changes ───
+    window.auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      if (user) {
+        // User logged in
+        chatUserName.textContent = user.displayName || "Anonymous";
+        chatUserPhoto.src = user.photoURL || "https://api.dicebear.com/7.x/adventurer/svg?seed=guest";
+        
+        chatAuthPrompt.classList.remove("active");
+        chatPanel.classList.add("active");
+        
+        // Mulai sinkronisasi chat real-time
+        startChatStream();
+      } else {
+        // User logged out
+        chatUserName.textContent = "Loading...";
+        chatUserPhoto.src = "";
+        
+        chatPanel.classList.remove("active");
+        chatAuthPrompt.classList.add("active");
+        
+        if (unsubscribeChat) {
+          unsubscribeChat();
+          unsubscribeChat = null;
+        }
+      }
+    });
+
+    // ─── B. Auth Actions ───
+    btnLoginGoogle.addEventListener("click", async () => {
+      try {
+        await window.auth.signInWithPopup(window.googleProvider);
+      } catch (err) {
+        console.error("Login gagal:", err);
+        alert("Gagal login dengan Google. Harap coba lagi.");
+      }
+    });
+
+    btnLogout.addEventListener("click", async () => {
+      try {
+        await window.auth.signOut();
+      } catch (err) {
+        console.error("Logout gagal:", err);
+      }
+    });
+
+    // ─── C. Character Counter ───
+    chatInputText.addEventListener("input", () => {
+      const len = chatInputText.value.length;
+      chatCharCounter.textContent = `${len} / 200`;
+      if (len >= 180) {
+        chatCharCounter.classList.add("limit-warn");
+      } else {
+        chatCharCounter.classList.remove("limit-warn");
+      }
+    });
+
+    // ─── D. Real-Time Chat Stream (Firestore) ───
+    function startChatStream() {
+      if (unsubscribeChat) unsubscribeChat();
+
+      // Pasang loading spinner
+      chatMessages.innerHTML = `
+        <div id="chat-messages-loader" class="chat-loader">
+          <div class="spinner"></div>
+          <p>Memuat pesan...</p>
+        </div>
+      `;
+
+      unsubscribeChat = window.db.collection("chats")
+        .orderBy("timestamp", "asc")
+        .limitToLast(50)
+        .onSnapshot((snapshot) => {
+          const loader = document.getElementById("chat-messages-loader");
+          if (loader) loader.remove();
+
+          if (snapshot.empty) {
+            chatMessages.innerHTML = `
+              <div class="chat-empty">
+                <i class='bx bx-message-rounded-x'></i>
+                <p>Belum ada pesan. Jadilah yang pertama mengirim pesan!</p>
+              </div>
+            `;
+            return;
+          }
+
+          const emptyState = chatMessages.querySelector(".chat-empty");
+          if (emptyState) emptyState.remove();
+
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+              const data = change.doc.data();
+              const messageId = change.doc.id;
+              
+              if (document.getElementById(`msg-${messageId}`)) return;
+
+              renderMessage(messageId, data);
+            }
+          });
+
+          scrollToBottom();
+        }, (error) => {
+          console.error("Error saat sinkronisasi chat:", error);
+          chatMessages.innerHTML = `
+            <div class="chat-empty">
+              <i class='bx bx-error' style='color:#ea4335;'></i>
+              <p style='color:#ea4335;'>Gagal memuat pesan. Pastikan Rules Firestore sudah disiapkan.</p>
+            </div>
+          `;
+        });
+    }
+
+    // ─── E. Render Message Bubble ───
+    function renderMessage(id, data) {
+      const isMine = currentUser && (data.senderName === currentUser.displayName || data.senderName === currentUser.email);
+      
+      const bubble = document.createElement("div");
+      bubble.id = `msg-${id}`;
+      bubble.className = `chat-bubble ${isMine ? 'mine' : ''}`;
+
+      let formattedTime = "Baru saja";
+      if (data.timestamp) {
+        const date = data.timestamp.toDate();
+        formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      }
+
+      // XSS Protection
+      const cleanText = escapeHTML(data.messageText);
+      const cleanName = escapeHTML(data.senderName);
+      const photoURL = data.senderPhoto || "https://api.dicebear.com/7.x/adventurer/svg?seed=guest";
+
+      bubble.innerHTML = `
+        <img src="${photoURL}" alt="${cleanName}" class="bubble-avatar" referrerpolicy="no-referrer">
+        <div class="bubble-content">
+          <div class="bubble-meta">
+            <span class="bubble-sender">${cleanName}</span>
+            <span class="bubble-time">${formattedTime}</span>
+          </div>
+          <div class="bubble-text-box">
+            <p>${cleanText}</p>
+          </div>
+        </div>
+      `;
+
+      chatMessages.appendChild(bubble);
+    }
+
+    // HTML Escaping Helper (Security)
+    function escapeHTML(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, (m) => {
+        switch (m) {
+          case '&': return '&amp;';
+          case '<': return '&lt;';
+          case '>': return '&gt;';
+          case '"': return '&quot;';
+          case "'": return '&#039;';
+          default: return m;
+        }
+      });
+    }
+
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // ─── F. Send Message Action ───
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!currentUser) {
+        alert("Anda harus login terlebih dahulu.");
+        return;
+      }
+
+      const messageText = chatInputText.value.trim();
+      
+      if (!messageText) return;
+      if (messageText.length > 200) {
+        alert("Pesan melebihi batas 200 karakter.");
+        return;
+      }
+
+      const now = Date.now();
+      if (now - lastSentTime < cooldownMs) {
+        const remaining = Math.ceil((cooldownMs - (now - lastSentTime)) / 1000);
+        alert(`Harap tunggu ${remaining} detik sebelum mengirim pesan.`);
+        return;
+      }
+
+      chatInputText.disabled = true;
+      btnSendMessage.disabled = true;
+
+      try {
+        await window.db.collection("chats").add({
+          senderName: currentUser.displayName || "User Google",
+          senderPhoto: currentUser.photoURL || "",
+          messageText: messageText,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        chatInputText.value = "";
+        chatCharCounter.textContent = "0 / 200";
+        chatCharCounter.classList.remove("limit-warn");
+        lastSentTime = Date.now();
+      } catch (err) {
+        console.error("Gagal mengirim pesan:", err);
+        alert("Gagal mengirim pesan. Silakan coba lagi.");
+      } finally {
+        chatInputText.disabled = false;
+        btnSendMessage.disabled = false;
+        chatInputText.focus();
+        scrollToBottom();
+      }
+    });
+  }
+})();
