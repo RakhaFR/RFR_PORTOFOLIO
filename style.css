@@ -311,22 +311,26 @@ section.full { min-height:100vh; }
 
 /* ─── HORIZONTAL PARALLAX SCROLL (Tech Stack) ──── */
 /*
-  .hscroll-wrap   → wrapper tinggi = 100vh + panjang track (di-set JS)
-                    position: relative, background hitam
-  .hscroll-inner  → sticky top:0, height:100vh, overflow:hidden
-  .hscroll-track  → flex row, digeser translateX oleh JS
-                    progress scroll 0→1 = geser 0 → -(trackW - vw)
+  JS-driven pinned scroll (karena overflow-x:hidden di html/body
+  merusak position:sticky). JS akan toggle antara:
+  - relative  → sebelum pin zone
+  - fixed     → saat di pin zone (ditahan di layar)
+  - absolute  → setelah pin zone (menempel di bawah wrap)
 */
 .hscroll-wrap {
-  /* JS set height dinamis setelah font load */
-  height: 400vh;
+  /* JS set height dinamis = 100vh + maxShift */
+  height: 400vh; /* fallback sebelum JS jalan */
   position: relative;
   background: var(--black);
+  /* PENTING: JANGAN overflow:hidden di sini, biarkan inner bisa fixed */
 }
 
 .hscroll-inner {
-  position: sticky;
+  /* Default: relative (belum masuk pin zone) */
+  position: relative;
   top: 0;
+  left: 0;
+  width: 100%;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -334,6 +338,23 @@ section.full { min-height:100vh; }
   background: var(--black);
   border-top: 1px solid var(--w08);
   border-bottom: 1px solid var(--w08);
+  z-index: 10;
+}
+
+/* JS toggle: saat di-pin (scroll di dalam wrap) */
+.hscroll-inner.pinned {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* JS toggle: setelah semua kata sudah lewat */
+.hscroll-inner.past {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  /* top di-set JS = maxShift */
 }
 
 .hscroll-track {
@@ -379,7 +400,7 @@ section.full { min-height:100vh; }
   text-shadow: none;
 }
 
-/* Progress bar tipis di bawah (opsional tapi keren) */
+/* Progress bar tipis di bawah */
 .hscroll-inner::after {
   content: '';
   position: absolute;
@@ -418,7 +439,7 @@ section.full { min-height:100vh; }
 }
 .about-img-col {
   flex-shrink:0;
-  width:11rem; height:11rem;
+  width:14rem; height:20rem;
   border-radius:var(--r-md); overflow:hidden;
   border:2px solid rgba(0,0,0,.1);
 }
@@ -837,7 +858,7 @@ button { font-family:var(--sans); cursor:pointer; }
   .about-inner { grid-template-columns: 1fr; gap: 3.5rem; }
   .about-right { display: none; }
   .sub-main { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-  .about-img-col { width: 8rem; height: 8rem; }
+  .about-img-col { width: 20rem; height: 20rem; }
   .sub-main h2 { font-size: clamp(3rem, 10vw, 4.5rem); }
   .text-box { padding: 2rem 2.2rem; }
   .text-box p { font-size: 1.4rem; }

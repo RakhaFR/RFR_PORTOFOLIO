@@ -123,13 +123,38 @@ const thumbs         = document.querySelectorAll(".thumb-grid .thumb");
 if (selectCategory) {
   selectCategory.addEventListener("change", () => {
     const category = selectCategory.value.toLowerCase();
+
     thumbs.forEach((thumb) => {
-      const thumbCategory = thumb.getAttribute("data-category");
+      const thumbCategory = (thumb.getAttribute("data-category") || "").toLowerCase();
       const show =
-        category === "all" || category === "category..." || category === ""
+        category === "all" || category === ""
           ? true
           : thumbCategory === category;
-      thumb.style.display = show ? "block" : "none";
+
+      if (show) {
+        thumb.style.display = "block";
+        // Reset AOS state supaya animasi bisa re-trigger
+        thumb.removeAttribute("data-aos-id");
+        thumb.classList.remove("aos-animate", "aos-init");
+      } else {
+        thumb.style.display = "none";
+      }
+    });
+
+    // Refresh AOS setelah DOM selesai diupdate
+    requestAnimationFrame(() => {
+      if (typeof AOS !== "undefined") {
+        AOS.refreshHard();
+        // Force-animate elemen yang sudah ada di dalam viewport sekarang
+        thumbs.forEach((thumb) => {
+          if (thumb.style.display === "none") return;
+          const rect = thumb.getBoundingClientRect();
+          const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+          if (inViewport) {
+            thumb.classList.add("aos-init", "aos-animate");
+          }
+        });
+      }
     });
   });
 }
@@ -145,19 +170,16 @@ window.addEventListener("click", (e) => {
  =====  HORIZONTAL PARALLAX SCROLL ===
  *************************************/
 /*
-  CARA KERJA YANG BENAR — "stacking / pinned scroll":
+  MANUAL PINNING (tanpa CSS sticky, karena overflow-x:hidden merusaknya).
 
-  wrap.offsetTop          = titik masuk (sticky mulai)
-  wrap.offsetTop + maxShift = titik keluar (sticky selesai, scroll lanjut)
+  Tiga state:
+  1. BEFORE  → inner relative, belum di-pin
+  2. PINNED  → inner fixed top:0, layar "ditahan", track translateX
+  3. PAST    → inner absolute bottom wrap, scroll lanjut ke bawah
 
-  Saat scrollY ada di antara keduanya → inner pinned di top:0
-  → track digeser translateX(-scrolled) px, diklamping ke maxShift
-
-  maxShift = trackScrollWidth - viewport_width
-  (cukup agar kata terakhir visible di kanan layar)
-
-  wrap height = maxShift + 100vh
-  → scroll jarak = maxShift px, persis habis setelah kata terakhir muncul
+  Pin zone: scrollY antara wrapTop dan wrapTop + maxShift
+  maxShift = track.scrollWidth - viewportWidth (+ sedikit padding)
+  wrap.height = 100vh + maxShift
 */
 (function initHScroll() {
   const wrap  = document.getElementById("hscrollWrap");
@@ -168,38 +190,77 @@ window.addEventListener("click", (e) => {
   let maxShift = 0;
   let rafId    = null;
 
+  /* ── Debounce helper ── */
+  function debounce(fn, ms) {
+    let t;
+    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+  }
+
   /* ── 1. Hitung maxShift & set wrapper height ── */
   function recalc() {
-    // Reset transform dulu agar scrollWidth terbaca benar
+    // Sementara reset inner ke relative agar offsetTop wrap akurat
+    inner.classList.remove("pinned", "past");
+    inner.style.top = "";
     track.style.transform = "translateX(0px)";
 
-    const vw       = window.innerWidth;
-    const trackW   = track.scrollWidth;
+    const vw     = window.innerWidth;
+    const vh     = window.innerHeight;
+    const trackW = track.scrollWidth;
 
-    // maxShift: jarak yg dibutuhkan agar kata terakhir muncul di kanan
-    // kita kasih sedikit padding kanan (8vw) agar tidak mentok di ujung
+    // maxShift: total px geser horizontal yang dibutuhkan
     maxShift = Math.max(0, trackW - vw + vw * 0.08);
 
-    // wrap height = maxShift + 100vh
-    // → user scroll maxShift px di dalam wrap sebelum lanjut ke bawah
-    wrap.style.height = (window.innerHeight + maxShift) + "px";
+    // Wrap height = 1 viewport + jarak scroll horizontal
+    wrap.style.height = (vh + maxShift) + "px";
   }
 
   /* ── 2. Update setiap frame ── */
   function update() {
     rafId = null;
 
-    const wrapTop = wrap.getBoundingClientRect().top;
-    // scrolled = berapa px user sudah scroll setelah wrap masuk viewport
-    const scrolled = Math.max(0, Math.min(maxShift, -wrapTop));
+    const scrollY = window.scrollY;
 
-    // progress 0 → 1
+    // Hitung wrapTop SETIAP FRAME — karena lazy-load bisa geser layout
+    // Kita pakai wrap.getBoundingClientRect().top + scrollY untuk dapat
+    // posisi absolut wrap dari document top
+    const wrapRect = wrap.getBoundingClientRect();
+    const wrapAbsTop = wrapRect.top + scrollY;
+
+    const pinStart = wrapAbsTop;               // mulai pin
+    const pinEnd   = wrapAbsTop + maxShift;     // selesai pin
+
+    let scrolled = 0;
+
+    if (scrollY < pinStart) {
+      // ── BEFORE: belum sampai wrap ──
+      inner.classList.remove("pinned", "past");
+      inner.style.top = "";
+      scrolled = 0;
+
+    } else if (scrollY >= pinStart && scrollY <= pinEnd) {
+      // ── PINNED: layar ditahan, track geser horizontal ──
+      inner.classList.add("pinned");
+      inner.classList.remove("past");
+      inner.style.top = "0";
+      scrolled = scrollY - pinStart;
+
+    } else {
+      // ── PAST: semua kata sudah lewat, lanjut scroll ke bawah ──
+      inner.classList.remove("pinned");
+      inner.classList.add("past");
+      inner.style.top = maxShift + "px";
+      scrolled = maxShift;
+    }
+
+    // Clamp untuk safety
+    scrolled = Math.max(0, Math.min(maxShift, scrolled));
+
     const progress = maxShift > 0 ? scrolled / maxShift : 0;
 
-    // Geser track — diklamping ke maxShift agar tidak melewati batas
+    // Geser track horizontal
     track.style.transform = `translateX(-${scrolled}px)`;
 
-    // Progress bar bawah
+    // Progress bar
     inner.style.setProperty("--hscroll-progress", (progress * 100).toFixed(2) + "%");
 
     // Highlight kata paling dekat ke 35% dari kiri (titik baca alami)
@@ -229,20 +290,24 @@ window.addEventListener("click", (e) => {
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", debounce(() => { recalc(); update(); }, 120));
-
-  /* ── Debounce helper ── */
-  function debounce(fn, ms) {
-    let t;
-    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
-  }
+  window.addEventListener("resize", debounce(() => { init(); }, 150));
 
   /* ── Tunggu font Fraunces load agar scrollWidth akurat ── */
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(init);
+    document.fonts.ready.then(() => {
+      init();
+      // Safety net: recalc lagi setelah lazy-load images selesai
+      setTimeout(init, 500);
+      setTimeout(init, 1500);
+    });
   } else {
-    // Fallback: tunggu 600ms
-    setTimeout(init, 600);
+    setTimeout(init, 800);
+  }
+
+  /* ── Recalc otomatis saat body berubah tinggi (lazy images dll) ── */
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(debounce(init, 250));
+    ro.observe(document.body);
   }
 })();
 
