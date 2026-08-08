@@ -1,600 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="my personal portfolio website as a junior web developer, showcasing my skills, projects, and contact information.">
-  <meta name="keywords"
-    content="web developer, portfolio, junior developer, front-end, HTML, CSS, JavaScript, PHP, Laravel, Bootstrap, Tailwind CSS">
+  <meta name="description" content="my personal portfolio website as a junior web developer, showcasing my skills, projects, and contact information.">
+  <meta name="keywords" content="web developer, portfolio, junior developer, front-end, HTML, CSS, JavaScript, PHP, Laravel, Bootstrap, Tailwind CSS">
   <meta name="author" content="Rakha Fadilah Riyadi">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://rakhafr.github.io/RFR_PORTOFOLIO/">
   <meta property="og:title" content="Rakha Fadilah Riyadi | Junior Web Developer Portfolio">
-  <meta property="og:description"
-    content="Showcasing my web development skills, personal projects, and tech stacks including Laravel, Tailwind, and React.">
+  <meta property="og:description" content="Showcasing my web development skills, personal projects, and tech stacks including Laravel, Tailwind, and React.">
   <meta property="og:image" content="https://rakhafr.github.io/RFR_PORTOFOLIO/img/hero.jpeg">
   <title>Rakha FR — Web Developer</title>
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="aos/aos.css">
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=chat&icon_names=credit_card_heart" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="img/hero.jpeg" />
 </head>
-
 <body>
 
-  <!-- ── Page Loader ───────────────────────────── -->
-  <div id="page-loader">
-    <div class="loader-inner">
-      <svg height="0" width="0" viewBox="0 0 64 64" class="loader-defs-svg">
-        <defs xmlns="http://www.w3.org/2000/svg">
-          <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-b">
-            <stop stop-color="#00c8ff"></stop>
-            <stop stop-color="#00ffc8" offset="1"></stop>
-          </linearGradient>
-          <linearGradient gradientUnits="userSpaceOnUse" y2="0" x2="0" y1="64" x1="0" id="ld-c">
-            <stop stop-color="#00c8ff"></stop>
-            <stop stop-color="#00ffc8" offset="1"></stop>
-            <animateTransform repeatCount="indefinite"
-              keySplines=".42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1"
-              keyTimes="0; 0.125; 0.25; 0.375; 0.5; 0.625; 0.75; 0.875; 1" dur="8s"
-              values="0 32 32;-270 32 32;-270 32 32;-540 32 32;-540 32 32;-810 32 32;-810 32 32;-1080 32 32;-1080 32 32"
-              type="rotate" attributeName="gradientTransform"></animateTransform>
-          </linearGradient>
-          <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-d">
-            <stop stop-color="#00ffc8"></stop>
-            <stop stop-color="#00c8ff" offset="1"></stop>
-          </linearGradient>
-        </defs>
+<!-- ── Page Loader ───────────────────────────── -->
+<div id="page-loader">
+  <div class="loader-inner">
+    <svg height="0" width="0" viewBox="0 0 64 64" class="loader-defs-svg">
+      <defs xmlns="http://www.w3.org/2000/svg">
+        <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-b">
+          <stop stop-color="#BAFF4F"></stop>
+          <stop stop-color="#ffffff" offset="1"></stop>
+        </linearGradient>
+        <linearGradient gradientUnits="userSpaceOnUse" y2="0" x2="0" y1="64" x1="0" id="ld-c">
+          <stop stop-color="#BAFF4F"></stop>
+          <stop stop-color="#ffffff" offset="1"></stop>
+          <animateTransform repeatCount="indefinite"
+            keySplines=".42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1"
+            keyTimes="0; 0.125; 0.25; 0.375; 0.5; 0.625; 0.75; 0.875; 1" dur="8s"
+            values="0 32 32;-270 32 32;-270 32 32;-540 32 32;-540 32 32;-810 32 32;-810 32 32;-1080 32 32;-1080 32 32"
+            type="rotate" attributeName="gradientTransform"></animateTransform>
+        </linearGradient>
+        <linearGradient gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="ld-d">
+          <stop stop-color="#ffffff"></stop>
+          <stop stop-color="#BAFF4F" offset="1"></stop>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="loader-text">
+      <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="360" d="M 12,8 L 12,56 M 12,8 L 38,8 C 46,8 52,14 52,22 C 52,30 46,36 38,36 L 12,36 M 34,36 L 52,56" />
       </svg>
+      <svg class="letter-svg spin-letter" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="spin" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="360" d="M 48,22 C 48,22 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z" />
+      </svg>
+      <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="360" d="M 14,8 L 14,56 M 14,32 L 46,8 M 14,32 L 46,56" />
+      </svg>
+      <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dash" stroke="url(#ld-d)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="360" d="M 12,8 L 12,56 M 12,28 C 12,28 20,16 34,16 C 44,16 50,22 50,32 L 50,56" />
+      </svg>
+      <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="dash" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" pathLength="360" d="M 48,16 C 48,16 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z" />
+      </svg>
+    </div>
+    <div class="loader-progress-wrap">
+      <div class="loader-progress-bar" id="loaderBar"></div>
+    </div>
+    <div class="loader-percent" id="loaderPercent">0%</div>
+  </div>
+</div>
 
-      <!-- Animated text: R-a-k-h-a -->
-      <div class="loader-text">
-        <!-- R -->
-        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="360"
-            d="M 12,8 L 12,56 M 12,8 L 38,8 C 46,8 52,14 52,22 C 52,30 46,36 38,36 L 12,36 M 34,36 L 52,56" />
-        </svg>
-        <!-- a -->
-        <svg class="letter-svg spin-letter" viewBox="0 0 64 64" height="64" width="64" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path class="spin" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="360"
-            d="M 48,22 C 48,22 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z" />
-        </svg>
-        <!-- k -->
-        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path class="dash" stroke="url(#ld-b)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="360" d="M 14,8 L 14,56 M 14,32 L 46,8 M 14,32 L 46,56" />
-        </svg>
-        <!-- h -->
-        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path class="dash" stroke="url(#ld-d)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="360" d="M 12,8 L 12,56 M 12,28 C 12,28 20,16 34,16 C 44,16 50,22 50,32 L 50,56" />
-        </svg>
-        <!-- a -->
-        <svg class="letter-svg" viewBox="0 0 64 64" height="64" width="64" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path class="dash" stroke="url(#ld-c)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="360"
-            d="M 48,16 C 48,16 48,56 48,56 M 16,32 C 16,22 22,14 32,14 C 42,14 48,22 48,32 C 48,42 42,50 32,50 C 22,50 16,42 16,32 Z" />
-        </svg>
-      </div>
+<!-- ── Header ─────────────────────────────────── -->
+<header class="header" id="main-header">
+  <a href="#home-content" class="logo">Rakha<span>.</span></a>
+  <input type="checkbox" id="check">
+  <label for="check" class="icons">
+    <i class='bx bx-menu' id="menu-icon"></i>
+    <i class='bx bx-x' id="close-icon"></i>
+  </label>
+  <nav class="navbar">
+    <a href="#home-content">Home</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#skill">Skill</a>
+    <a href="#slider">Certificate</a>
+    <a href="#projek">Portfolio</a>
+    <a href="#chat">Chat</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="https://wa.me/6282111762085" class="header-cta" target="_blank">↓ Hire Me</a>
+</header>
 
-      <!-- Progress bar -->
-      <div class="loader-progress-wrap">
-        <div class="loader-progress-bar" id="loaderBar"></div>
-      </div>
-      <div class="loader-percent" id="loaderPercent">0%</div>
+<!-- ── Home ───────────────────────────────────── -->
+<section class="home-content full" id="home-content">
+  <div id="hero-3d-container"></div>
+  <div class="hero-badge" data-aos="fade-down">
+    <span class="badge-dot"></span>
+    <span>Available for work · Bogor, West Java</span>
+  </div>
+  <div class="content" data-aos="fade-right">
+    <h1>Rakha<br><em class="highlight">Fadilah</em><br>Riyadi</h1>
+    <p>Front-end developer from Bogor. 1 year crafting clean, functional, and visually memorable websites. I treat code as craft.</p>
+    <div class="btn-box">
+      <a href="#projek"><span>View Portfolio</span></a>
+      <a href="#contact" class="btn-outline"><span>Contact Me</span></a>
+    </div>
+    <div class="home-sci">
+      <a href="https://www.facebook.com/profile.php?id=100084701316322&mibextid=ZbWKwL" class="social" data-name="Facebook" data-aos="zoom-in-down"><img src="ui/img/facebook-icon.svg" alt="Facebook"></a>
+      <a href="http://tiktok.com/@xzearty_" class="social" data-name="TikTok" data-aos="zoom-in-down"><img src="ui/img/tiktok-icon.svg" alt="TikTok"></a>
+      <a href="https://www.instagram.com/bang_r1yad1/" class="social" data-name="Instagram" data-aos="zoom-in-down"><img src="ui/img/instagram-icon.svg" alt="Instagram"></a>
+      <a href="https://wa.me/6282111762085" class="social" data-name="WhatsApp" data-aos="zoom-in-down"><img src="ui/img/whatsapp-icon.svg" alt="WhatsApp"></a>
+      <a href="https://lynk.id/bangriyadi/s/z6l332ojeqrg" class="social" data-name="Support Me" data-aos="zoom-in-down"><img src="ui/img/lynkId-icon.png" alt="Support Me"></a>
+      <a href="https://discord.com/users/1274191390246440981" class="social" data-name="Discord" data-aos="zoom-in-down"><img src="ui/img/discord-icon.svg" alt="Discord"></a>
+      <a href="https://github.com/RakhaFR/" class="social" data-name="GitHub" data-aos="zoom-in-down"><img src="ui/img/github-icon.png" alt="GitHub"></a>
     </div>
   </div>
-
-  <!-- ── Header ─────────────────────────────────── -->
-  <header class="header">
-    <a href="" class="logo">Rakha<span style="color:var(--accent)">.</span></a>
-    <input type="checkbox" id="check">
-    <label for="check" class="icons">
-      <i class='bx bx-menu' id="menu-icon"></i>
-      <i class='bx bx-x' id="close-icon"></i>
-    </label>
-    <nav class="navbar">
-      <a href="#home-content">Home</a>
-      <a href="#about">About</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#skill">Skill</a>
-      <a href="#slider">Certificate</a>
-      <a href="#projek">Portfolio</a>
-      <a href="#chat">Chat</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <!-- ── Home ───────────────────────────────────── -->
-  <section class="home-content full" id="home-content">
-    <!-- Interactive 3D Background Container -->
-    <div id="hero-3d-container"></div>
-    <div class="content">
-      <h1 data-aos="fade-right">Rakha <span class="highlight">Fadilah</span></h1>
-      <h2 class="engineer" data-aos="fade-right">Junior Web Developer</h2>
-      <p data-aos="fade-down">
-        Hello, I'm a Front-End Developer from Bogor, West Java. I have 1 year of experience building
-        clean, functional, and visually engaging websites. I treat code as craft — let's build something great together.
-      </p>
-      <div class="btn-box" data-aos="fade-left">
-        <a href="#contact"><span>Contact Me</span></a>
-      </div>
-      <div class="home-sci">
-        <a href="https://www.facebook.com/profile.php?id=100084701316322&mibextid=ZbWKwL" class="social"
-          data-name="Facebook" data-aos="zoom-in-down">
-          <img src="ui/img/facebook-icon.svg" alt="Facebook">
-        </a>
-        <a href="http://tiktok.com/@xzearty_" class="social" data-name="TikTok" data-aos="zoom-in-down">
-          <img src="ui/img/tiktok-icon.svg" alt="TikTok">
-        </a>
-        <a href="https://www.instagram.com/bang_r1yad1/" class="social" data-name="Instagram" data-aos="zoom-in-down">
-          <img src="ui/img/instagram-icon.svg" alt="Instagram">
-        </a>
-        <a href="https://wa.me/6282111762085" class="social" data-name="WhatsApp" data-aos="zoom-in-down">
-          <img src="ui/img/whatsapp-icon.svg" alt="WhatsApp">
-        </a>
-        <a href="https://lynk.id/bangriyadi/s/z6l332ojeqrg" class="social" data-name="Support Me"
-          data-aos="zoom-in-down">
-          <img src="ui/img/lynkId-icon.png" alt="Support Me">
-        </a>
-        <a href="https://discord.com/users/1274191390246440981" class="social" data-name="Discord"
-          data-aos="zoom-in-down">
-          <img src="ui/img/discord-icon.svg" alt="Discord">
-        </a>
-        <a href="https://github.com/RakhaFR/" class="social" data-name="GitHub" data-aos="zoom-in-down">
-          <img src="ui/img/github-icon.png" alt="GitHub">
-        </a>
-      </div>
-    </div>
-
-    <div class="content margin-top" data-aos="fade-up">
+  <div class="content margin-top" data-aos="fade-up">
+    <div class="hero-img-wrap">
+      <div class="hero-glow"></div>
       <div class="blob-frame">
         <img src="img/hero.jpeg" alt="Foto Profil">
+        <div class="hero-img-overlay"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ── About ──────────────────────────────────── -->
-  <section class="about full" id="about">
-    <div class="container">
-      <div class="sub-main" data-aos="fade-up">
-        <div class="blob-frame">
-          <img src="img/Rakha.jpg" alt="Foto Profil">
-        </div>
-        <h2>About <span>Me</span></h2>
-      </div>
-      <div class="text-float">
-        <div class="text-box" data-aos="fade-down-right">
-          <p>
-            My name is Rakha Fadilah Riyadi. I'm a front-end web developer from Bogor, West Java,
-            with one year of hands-on experience. In my opinion, building software is not just a job —
-            it's an art form with aesthetic value. My goal is to craft websites that are functional,
-            user-friendly, and visually memorable. I put a personal touch into every project to ensure
-            the final product truly reflects your brand identity. If you're interested in working together,
-            feel free to reach out!
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Gallery ────────────────────────────────── -->
-  <section class="gallery full" id="gallery">
-    <h2 class="heading" data-aos="fade-up">GALLERY</h2>
-    <div class="gallery-container">
-      <div class="gallery-preview" data-aos="zoom-in-down">
-        <img src="img/hero.jpeg" alt="Foto Saya di kaca hotel">
-        <p>Foto Saya di depan kaca hotel</p>
-      </div>
-
-      <div class="gallery-thumbs">
-        <select data-aos="fade-left">
-          <option value="all">Category All</option>
-          <option value="portfolio">My Gallery</option>
-          <option value="kegiatan">Kegiatan</option>
-          <option value="acara">Acara</option>
-        </select>
-
-        <div class="thumb-grid">
-          <div class="thumb" data-category="portfolio" data-aos="fade-right">
-            <img src="img/hero.jpeg" alt="">
-            <div class="overlay">
-              <h3>Profil Saya</h3>
-              <p>Foto Saya di depan kaca hotel</p>
-            </div>
-          </div>
-          <div class="thumb" data-category="portfolio" data-aos="fade-left">
-            <img src="img/Rakha.jpg" alt="">
-            <div class="overlay">
-              <h3>Aku Suka Ngoding</h3>
-              <p>Photo yang menunjukkan awal mulai nya suka di programming</p>
-            </div>
-          </div>
-          <div class="thumb" data-category="kegiatan" data-aos="fade-right">
-            <img src="img/zoomDigiup2025.png" alt="">
-            <div class="overlay">
-              <h3>Zoom Telkom Digiup 2025</h3>
-              <p>Pelatihan web development with laravel bersama Telkom Digiup 2025</p>
-            </div>
-          </div>
-          <div class="thumb" data-category="kegiatan" data-aos="fade-left">
-            <img src="img/ngodingDiKelas.jpg" alt="">
-            <div class="overlay">
-              <h3>Ngoding di kelas</h3>
-              <p>Gak tau siapa yang motret ini?!</p>
-            </div>
-          </div>
-          <div class="thumb" data-category="kegiatan" data-aos="fade-left">
-            <img src="img/Nevtik.jpg" alt="">
-            <div class="overlay">
-              <h3>Ekskul Nevtik Fase 2</h3>
-              <p>Tahap yang lumayan pusing. Mau masuk konsep OOP JavaScript!</p>
-            </div>
-          </div>
-        </div>
-
-        <button class="btn-more" data-aos="zoom-in-up">MORE →</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Popup Gallery -->
-  <div class="popup-gallery" id="popupGallery">
-    <div class="popup-content">
-      <span class="close">&times;</span>
-      <div class="popup-grid">
-        <div class="popup-item">
-          <img src="img/Takanashi_Hoshino.jpg" alt="">
-          <div class="overlay">
-            <h3>My Luv</h3>
-            <p>"Sst jangan kasih tau 🤫"</p>
-          </div>
-        </div>
-        <div class="popup-item">
-          <img src="img/ToBeHeroX.jpg" alt="ToBeHeroX">
-          <div class="overlay">
-            <h3>Donghua TO BE HERO X</h3>
-            <p>Salah Satu Anime Donghua yang KECE BADAI</p>
-          </div>
-        </div>
+      <div class="hero-stat-badge">
+        <div class="stat-label">Open to work</div>
+        <div class="stat-value">Junior Dev · 2026</div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ── Skills ─────────────────────────────────── -->
-  <section class="skill full" id="skill">
-    <h2 class="heading" data-aos="fade-up">My <span>Skills</span></h2>
-    <div class="skill-row">
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/html-icon.png" alt="HTML">
-          <h3>HTML</h3>
+<!-- ── Marquee Strip 1 (after hero, lime bg, auto-loop) ── -->
+<div class="marquee-strip lime-strip">
+  <div class="marquee-track">
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+    <span>JUNIOR WEB DEVELOPER&nbsp;•&nbsp;FRONT-END CRAFT&nbsp;•&nbsp;CLEAN CODE&nbsp;•&nbsp;</span>
+  </div>
+</div>
+
+<!-- ── Horizontal Parallax Scroll (Tech Stack) ── -->
+<div class="hscroll-wrap" id="hscrollWrap">
+  <div class="hscroll-inner">
+    <div class="hscroll-track" id="hscrollTrack">
+      <span class="hscroll-word">HTML</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">CSS</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">JavaScript</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">Tailwind CSS</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">PHP</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">Laravel</span>
+      <span class="hscroll-sep">•</span>
+      <span class="hscroll-word">Bootstrap</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── About ──────────────────────────────────── -->
+<section class="about full" id="about">
+  <!-- struktur sub-main + text-float dipertahankan agar script.js parallax ".sub-main h2" tetap bekerja -->
+  <div class="about-inner">
+    <div class="about-left" data-aos="fade-right">
+      <span class="section-pill dark">About Me</span>
+      <!-- sub-main diperlukan script.js -->
+      <div class="sub-main">
+        <div class="about-img-col">
+          <img src="img/Rakha.jpg" alt="About Photo">
         </div>
-        <p>Struktur dasar halaman web menggunakan elemen semantic dan best practice.</p>
-        <span class="percent">95%</span>
-        <div class="bar"><span style="width:95%"></span></div>
+        <h2>Building<br><em>code</em> as<br>an art form</h2>
       </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/css-icon.svg" alt="CSS">
-          <h3>CSS</h3>
+      <!-- text-float diperlukan script.js -->
+      <div class="text-float">
+        <div class="text-box">
+          <p>My name is Rakha Fadilah Riyadi. I'm a front-end web developer from Bogor, West Java, with one year of hands-on experience. In my opinion, building software is not just a job — it's an art form with aesthetic value. My goal is to craft websites that are functional, user-friendly, and visually memorable.</p>
         </div>
-        <p>Mendesain layout, animasi, dan tampilan website responsif dengan CSS.</p>
-        <span class="percent">90%</span>
-        <div class="bar"><span style="width:90%"></span></div>
       </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/js-icon.svg" alt="JavaScript">
-          <h3>JavaScript</h3>
-        </div>
-        <p>Menambahkan interaktivitas, manipulasi DOM, dan logika front-end dasar.</p>
-        <span class="percent">65%</span>
-        <div class="bar"><span style="width:65%"></span></div>
-      </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/php-icon.svg" alt="PHP">
-          <h3>PHP</h3>
-        </div>
-        <p>Bahasa server-side untuk membangun website dinamis dan koneksi database.</p>
-        <span class="percent">40%</span>
-        <div class="bar"><span style="width:40%"></span></div>
-      </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/boostrap-icon.svg" alt="Bootstrap 5">
-          <h3>Bootstrap 5</h3>
-        </div>
-        <p>Framework CSS untuk membuat tampilan web cepat, responsif, dan modern.</p>
-        <span class="percent">45%</span>
-        <div class="bar"><span style="width:45%"></span></div>
-      </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/tailwind-icon.png" alt="Tailwind CSS">
-          <h3>Tailwind CSS</h3>
-        </div>
-        <p>framework CSS utility-first yang populer untuk membangun antarmuka website (UI) secara cepat dan kustom</p>
-        <span class="percent">80%</span>
-        <div class="bar"><span style="width:80%"></span></div>
-      </div>
-
-      <div class="skill-card glass" data-aos="zoom-in-up">
-        <div class="card-header">
-          <img src="ui/img/Laravel-icon.svg" alt="Laravel">
-          <h3>Laravel</h3>
-        </div>
-        <p>framework aplikasi web berbasis PHP yang bersifat open-source, dirancang dengan sintaksis elegan dan
-          menggunakan pola arsitektur Model-View-Controller (MVC) untuk mempermudah pengembangan web</p>
-        <span class="percent">30%</span>
-        <div class="bar"><span style="width:30%"></span></div>
+      <div class="about-stats">
+        <div class="stat-item"><span class="stat-num">1+</span><span class="stat-lbl">Year Exp.</span></div>
+        <div class="stat-item"><span class="stat-num">7+</span><span class="stat-lbl">Projects</span></div>
+        <div class="stat-item"><span class="stat-num">100%</span><span class="stat-lbl">Dedication</span></div>
       </div>
     </div>
-  </section>
-
-  <!-- ── Certificate ────────────────────────────── -->
-  <section class="slider full" id="slider">
-    <h2 class="heading" data-aos="fade-up">My <span>Certificate</span></h2>
-    <div class="cv-medal">
-      <div class="box-medal1" data-aos="fade-up" data-aos-anchor-placement="center-bottom" data-aos-delay="500">
-        <div class="img-medal">
-          <img src="img/Sertifikat Digiup 2025/Sertifikat_digiup_page-0001.jpg" alt="">
-        </div>
-        <div class="medal-h2">
-          <h2>Sertifikat Digiup 2025</h2>
-        </div>
-        <div class="medal-p">
-          <p>Ini adalah Sertifikat pertamaku dalam fase menjadi junior developer. Aku sangat senang karena ini
-            adalah sertifikat dari Telkom Indonesia.</p>
-        </div>
+    <div class="about-right" data-aos="fade-left">
+      <div class="about-img-grid">
+        <div class="about-img-item"><img src="img/Rakha.jpg" alt="About 1"></div>
+        <div class="about-img-item offset"><img src="img/hero.jpeg" alt="About 2"></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── Portfolio ──────────────────────────────── -->
-  <section class="projek full" id="projek">
-    <h2 class="heading" style="margin-bottom: 5rem;" data-aos="fade-up">My <span>Portfolio</span></h2>
-    <div class="cv-blog">
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/PlengerRng.jpg" alt="Plenger RnG" />
+<!-- ── Gallery ────────────────────────────────── -->
+<section class="gallery full" id="gallery">
+  <span class="section-pill light" data-aos="fade-down">Gallery</span>
+  <h2 class="heading" data-aos="fade-up">MY <span>GALLERY</span></h2>
+  <div class="gallery-container">
+    <div class="gallery-preview" data-aos="zoom-in-down">
+      <img src="img/hero.jpeg" alt="Foto Saya">
+      <p>Foto Saya di depan kaca hotel</p>
+    </div>
+    <div class="gallery-thumbs">
+      <select data-aos="fade-left">
+        <option value="all">Category All</option>
+        <option value="portfolio">My Gallery</option>
+        <option value="kegiatan">Kegiatan</option>
+        <option value="acara">Acara</option>
+      </select>
+      <div class="thumb-grid">
+        <div class="thumb" data-category="portfolio" data-aos="fade-right">
+          <img src="img/hero.jpeg" alt="">
+          <div class="overlay"><h3>Profil Saya</h3><p>Foto Saya di depan kaca hotel</p></div>
         </div>
-        <div class="content">
-          <h2>Plenger RnG</h2>
-          <p>
-            Sebuah permainan gacha simpel untuk mendapatkan muka-muka lucu dan kocak dengan rarity yang berbeda-beda.
-          </p>
-          <a href="https://rakhafr.github.io/PlengerRnG/" class="btn">Go To Website</a>
+        <div class="thumb" data-category="portfolio" data-aos="fade-left">
+          <img src="img/Rakha.jpg" alt="">
+          <div class="overlay"><h3>Aku Suka Ngoding</h3><p>Photo yang menunjukkan awal mulai nya suka di programming</p></div>
+        </div>
+        <div class="thumb" data-category="kegiatan" data-aos="fade-right">
+          <img src="img/zoomDigiup2025.png" alt="">
+          <div class="overlay"><h3>Zoom Telkom Digiup 2025</h3><p>Pelatihan web development with laravel</p></div>
+        </div>
+        <div class="thumb" data-category="kegiatan" data-aos="fade-left">
+          <img src="img/ngodingDiKelas.jpg" alt="">
+          <div class="overlay"><h3>Ngoding di kelas</h3><p>Gak tau siapa yang motret ini?!</p></div>
+        </div>
+        <div class="thumb" data-category="kegiatan" data-aos="fade-left">
+          <img src="img/Nevtik.jpg" alt="">
+          <div class="overlay"><h3>Ekskul Nevtik Fase 2</h3><p>Mau masuk konsep OOP JavaScript!</p></div>
         </div>
       </div>
+      <button class="btn-more" data-aos="zoom-in-up">MORE →</button>
+    </div>
+  </div>
+</section>
 
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/ReflexGame.png" alt="Reflex Game" />
-        </div>
-        <div class="content">
-          <h2>Reflex Hands Games</h2>
-          <p>
-            Permainan yang menguji kecepatan dan ketepatan tangan Anda dengan berbagai tantangan reflex.
-          </p>
-          <a href="https://rakhafr.github.io/Reflex-Game/" class="btn">Go To Website</a>
-        </div>
+<!-- Popup Gallery -->
+<div class="popup-gallery" id="popupGallery">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <div class="popup-grid">
+      <div class="popup-item">
+        <img src="img/Takanashi_Hoshino.jpg" alt="">
+        <div class="overlay"><h3>My Luv</h3><p>"Sst jangan kasih tau 🤫"</p></div>
       </div>
-
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/TheSurvey.png" alt="The Survey" />
-        </div>
-        <div class="content">
-          <h2>The Survey</h2>
-          <p>
-            Sebuah visual novel yang menceritakan seorang yang berjuang keluar dari isolasi diri selama 8 bulan.
-          </p>
-          <a href="https://rakhafr.github.io/TheSurvey/" class="btn">Go To Website</a>
-        </div>
-      </div>
-
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/boostrap-template-class.png" alt="Bootstrap Template Custom Class" />
-        </div>
-        <div class="content">
-          <h2>boostrap-template-custom-class</h2>
-          <p>
-            kumpulan komponen dan halaman template Bootstrap 5.3 yang lengkap, siap pakai, dan bisa dijalankan secara
-            100% offline. Semua template juga sudah dilengkapi dengan fitur Copy Code untuk mempermudah Anda menyalin
-            elemen atau komponen ke proyek Anda.
-          </p>
-          <a href="https://rakhafr.github.io/Boostrap-template-class/" class="btn">Go To Website</a>
-        </div>
-      </div>
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/skyCast.png" alt="Bootstrap Template Custom Class" />
-        </div>
-        <div class="content">
-          <h2>skyCast</h2>
-          <p>
-            SkyCast adalah platform pemantau cuaca cerdas yang mengintegrasikan data API cuaca global untuk menyajikan
-            informasi suhu, kelembapan, hingga kualitas udara secara instan dan mudah dibaca.
-          </p>
-          <a href="https://sky-cast-iota-lime.vercel.app/" class="btn">Go To Website</a>
-        </div>
-      </div>
-      <div class="card" data-aos="zoom-in-down">
-        <div class="image">
-          <img src="img/tukangPlugins.png" alt="Bootstrap Template Custom Class" />
-        </div>
-        <div class="content">
-          <h2>Tukang Plugins</h2>
-          <p>Tukang Plugins adalah pusat koleksi assets digital dan solusi plugin yang dirancang untuk mempercepat alur kerja developer. Platform ini menyediakan akses cepat ke berbagai tools pendukung pengembangan aplikasi dengan navigasi yang intuitif dan sistem rating transparan.</p>
-          <a href="https://tukang-plugins.vercel.app/" class="btn">Go To Website</a>
-        </div>
+      <div class="popup-item">
+        <img src="img/ToBeHeroX.jpg" alt="ToBeHeroX">
+        <div class="overlay"><h3>Donghua TO BE HERO X</h3><p>Salah Satu Anime Donghua yang KECE BADAI</p></div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ── Chat Room ──────────────────────────────── -->
-  <section class="chat full" id="chat">
-    <h2 class="heading" data-aos="fade-up">Public <span>Chat Room</span></h2>
-    <div class="chat-container glass" data-aos="zoom-in">
-      <div class="chat-wrapper">
-        <!-- Main Chat Panel (Always Visible) -->
-        <div id="chat-panel" class="chat-state-panel active">
-          <!-- Chat Header -->
-          <div class="chat-header-user">
-            <!-- Info User (Terlihat jika sudah login) -->
-            <div id="chat-header-user-info" class="user-info" style="display: none;">
-              <img id="chat-user-photo" src="" alt="Avatar" class="user-avatar-img">
-              <div class="user-details">
-                <span id="chat-user-name" class="user-name-txt">Loading...</span>
-                <span class="user-status-txt"><span class="status-dot"></span>Online</span>
-              </div>
-            </div>
+<!-- ── Skills ─────────────────────────────────── -->
+<section class="skill full" id="skill">
+  <span class="section-pill light" data-aos="fade-down">Skills</span>
+  <h2 class="heading" data-aos="fade-up">Technical <span>Proficiency</span></h2>
+  <div class="skill-row">
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/html-icon.png" alt="HTML"><h3>HTML</h3></div>
+      <p>Struktur dasar halaman web menggunakan elemen semantic dan best practice.</p>
+      <span class="percent">95%</span>
+      <div class="bar"><span style="width:95%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/css-icon.svg" alt="CSS"><h3>CSS</h3></div>
+      <p>Mendesain layout, animasi, dan tampilan website responsif dengan CSS.</p>
+      <span class="percent">90%</span>
+      <div class="bar"><span style="width:90%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/js-icon.svg" alt="JavaScript"><h3>JavaScript</h3></div>
+      <p>Menambahkan interaktivitas, manipulasi DOM, dan logika front-end dasar.</p>
+      <span class="percent">65%</span>
+      <div class="bar"><span style="width:65%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/php-icon.svg" alt="PHP"><h3>PHP</h3></div>
+      <p>Bahasa server-side untuk membangun website dinamis dan koneksi database.</p>
+      <span class="percent">40%</span>
+      <div class="bar"><span style="width:40%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/boostrap-icon.svg" alt="Bootstrap 5"><h3>Bootstrap 5</h3></div>
+      <p>Framework CSS untuk membuat tampilan web cepat, responsif, dan modern.</p>
+      <span class="percent">45%</span>
+      <div class="bar"><span style="width:45%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/tailwind-icon.png" alt="Tailwind CSS"><h3>Tailwind CSS</h3></div>
+      <p>Framework CSS utility-first yang populer untuk membangun antarmuka website.</p>
+      <span class="percent">80%</span>
+      <div class="bar"><span style="width:80%"></span></div>
+    </div>
+    <div class="skill-card" data-aos="zoom-in-up">
+      <div class="card-header"><img src="ui/img/Laravel-icon.svg" alt="Laravel"><h3>Laravel</h3></div>
+      <p>Framework PHP dengan arsitektur MVC yang elegan untuk web app.</p>
+      <span class="percent">30%</span>
+      <div class="bar"><span style="width:30%"></span></div>
+    </div>
+  </div>
+</section>
 
-            <!-- Info Guest (Terlihat jika belum login) -->
-            <div id="chat-header-guest-info" class="user-info">
-              <div class="user-avatar-placeholder">
-                <i class='bx bx-group'></i>
-              </div>
-              <div class="user-details">
-                <span class="user-name-txt">Public Chat Room</span>
-                <span class="user-status-txt"><span class="status-dot"></span>Guest Mode</span>
-              </div>
-            </div>
+<!-- ── Certificate ────────────────────────────── -->
+<section class="slider full" id="slider">
+  <span class="section-pill light" data-aos="fade-down">Certificate</span>
+  <h2 class="heading" data-aos="fade-up">My <span>Credentials</span></h2>
+  <div class="cv-medal">
+    <div class="box-medal1" data-aos="fade-up" data-aos-anchor-placement="center-bottom" data-aos-delay="500">
+      <div class="medal-icon">🏆</div>
+      <div class="medal-meta">Telkom Indonesia · 2025</div>
+      <div class="img-medal">
+        <img src="img/Sertifikat Digiup 2025/Sertifikat_digiup_page-0001.jpg" alt="">
+      </div>
+      <div class="medal-h2"><h2>Sertifikat Digiup 2025</h2></div>
+      <div class="medal-p"><p>Ini adalah Sertifikat pertamaku dalam fase menjadi junior developer. Aku sangat senang karena ini adalah sertifikat dari Telkom Indonesia.</p></div>
+    </div>
+  </div>
+</section>
 
-            <!-- Header Actions -->
-            <div class="chat-header-actions">
-              <!-- Tombol Sign in Google (Jika belum login) -->
-              <button id="btn-login-google" class="btn-google-header">
-                <svg class="google-svg" viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                    fill="#4285F4" />
-                  <path
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                    fill="#34A853" />
-                  <path
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
-                    fill="#FBBC05" />
-                  <path
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
-                    fill="#EA4335" />
-                </svg>
-                <span>Sign In</span>
-              </button>
+<!-- ── Portfolio ──────────────────────────────── -->
+<section class="projek full" id="projek">
+  <span class="section-pill dark" data-aos="fade-down">Portfolio</span>
+  <h2 class="heading dark-heading" data-aos="fade-up">Selected <em>Work</em></h2>
+  <div class="cv-blog">
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/PlengerRng.jpg" alt="Plenger RnG"><span class="card-tag">Game</span></div>
+      <div class="content"><h2>Plenger RnG</h2><p>Sebuah permainan gacha simpel untuk mendapatkan muka-muka lucu dan kocak dengan rarity yang berbeda-beda.</p><a href="https://rakhafr.github.io/PlengerRnG/" class="btn">Visit site →</a></div>
+    </div>
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/ReflexGame.png" alt="Reflex Game"><span class="card-tag">Game</span></div>
+      <div class="content"><h2>Reflex Hands Games</h2><p>Permainan yang menguji kecepatan dan ketepatan tangan Anda dengan berbagai tantangan reflex.</p><a href="https://rakhafr.github.io/Reflex-Game/" class="btn">Visit site →</a></div>
+    </div>
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/TheSurvey.png" alt="The Survey"><span class="card-tag">Visual Novel</span></div>
+      <div class="content"><h2>The Survey</h2><p>Sebuah visual novel yang menceritakan seorang yang berjuang keluar dari isolasi diri selama 8 bulan.</p><a href="https://rakhafr.github.io/TheSurvey/" class="btn">Visit site →</a></div>
+    </div>
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/boostrap-template-class.png" alt="Bootstrap Template"><span class="card-tag">Tool</span></div>
+      <div class="content"><h2>Bootstrap Template Hub</h2><p>Kumpulan komponen Bootstrap 5.3 yang lengkap, siap pakai, dan bisa dijalankan secara 100% offline.</p><a href="https://rakhafr.github.io/Boostrap-template-class/" class="btn">Visit site →</a></div>
+    </div>
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/skyCast.png" alt="SkyCast"><span class="card-tag">App</span></div>
+      <div class="content"><h2>SkyCast</h2><p>Platform pemantau cuaca cerdas yang menyajikan informasi suhu, kelembapan, hingga kualitas udara.</p><a href="https://sky-cast-iota-lime.vercel.app/" class="btn">Visit site →</a></div>
+    </div>
+    <div class="card" data-aos="zoom-in-down">
+      <div class="image"><img src="img/tukangPlugins.png" alt="Tukang Plugins"><span class="card-tag">Platform</span></div>
+      <div class="content"><h2>Tukang Plugins</h2><p>Pusat koleksi assets digital dan solusi plugin yang dirancang untuk mempercepat alur kerja developer.</p><a href="https://tukang-plugins.vercel.app/" class="btn">Visit site →</a></div>
+    </div>
+  </div>
+</section>
 
-              <!-- Tombol Logout (Jika sudah login) -->
-              <button id="btn-logout" class="btn-logout-clean" style="display: none;">
-                <i class='bx bx-log-out'></i> Sign Out
-              </button>
+<!-- ── Chat Room ──────────────────────────────── -->
+<section class="chat full" id="chat">
+  <span class="section-pill light" data-aos="fade-down">Chat</span>
+  <h2 class="heading" data-aos="fade-up">Public <span>Chat Room</span></h2>
+  <div class="chat-container glass" data-aos="zoom-in">
+    <div class="chat-wrapper">
+      <div id="chat-panel" class="chat-state-panel active">
+        <div class="chat-header-user">
+          <div id="chat-header-user-info" class="user-info" style="display: none;">
+            <img id="chat-user-photo" src="" alt="Avatar" class="user-avatar-img">
+            <div class="user-details">
+              <span id="chat-user-name" class="user-name-txt">Loading...</span>
+              <span class="user-status-txt"><span class="status-dot"></span>Online</span>
             </div>
           </div>
-
-          <!-- Chat Stream Area -->
-          <div id="chat-messages" class="chat-messages-area">
-            <div id="chat-messages-loader" class="chat-loader">
-              <div class="spinner"></div>
-              <p>Memuat pesan...</p>
+          <div id="chat-header-guest-info" class="user-info">
+            <div class="user-avatar-placeholder"><i class='bx bx-group'></i></div>
+            <div class="user-details">
+              <span class="user-name-txt">Public Chat Room</span>
+              <span class="user-status-txt"><span class="status-dot"></span>Guest Mode</span>
             </div>
           </div>
-
-          <!-- Chat Input Form -->
-          <form id="chat-form" class="chat-input-form">
-            <!-- Form Input Aktif (Terlihat jika sudah login) -->
-            <div id="chat-input-wrapper" class="chat-input-inner-wrapper" style="display: none; width: 100%;">
-              <input type="text" id="chat-input-text" placeholder="Tulis pesan Anda di sini..." maxlength="200" required
-                autocomplete="off">
-              <div class="chat-input-actions">
-                <span id="chat-char-counter" class="char-counter">0 / 200</span>
-                <button type="submit" id="btn-send-message" class="btn-send">
-                  <i class='bx bxs-paper-plane'></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Petunjuk Login (Terlihat jika belum login) -->
-            <div id="chat-input-blocked" class="chat-input-blocked-msg" style="width: 100%;">
-              <p>Silakan login dengan Google untuk ikut bergabung dalam obrolan...</p>
-            </div>
-          </form>
+          <div class="chat-header-actions">
+            <button id="btn-login-google" class="btn-google-header">
+              <svg class="google-svg" viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+              </svg>
+              <span>Sign In</span>
+            </button>
+            <button id="btn-logout" class="btn-logout-clean" style="display: none;">
+              <i class='bx bx-log-out'></i> Sign Out
+            </button>
+          </div>
         </div>
+        <div id="chat-messages" class="chat-messages-area">
+          <div id="chat-messages-loader" class="chat-loader">
+            <div class="spinner"></div>
+            <p>Memuat pesan...</p>
+          </div>
+        </div>
+        <form id="chat-form" class="chat-input-form">
+          <div id="chat-input-wrapper" class="chat-input-inner-wrapper" style="display: none; width: 100%;">
+            <input type="text" id="chat-input-text" placeholder="Tulis pesan Anda di sini..." maxlength="200" required autocomplete="off">
+            <div class="chat-input-actions">
+              <span id="chat-char-counter" class="char-counter">0 / 200</span>
+              <button type="submit" id="btn-send-message" class="btn-send"><i class='bx bxs-paper-plane'></i></button>
+            </div>
+          </div>
+          <div id="chat-input-blocked" class="chat-input-blocked-msg" style="width: 100%;">
+            <p>Silakan login dengan Google untuk ikut bergabung dalam obrolan...</p>
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── Contact ────────────────────────────────── -->
-  <section class="contact full" id="contact">
-    <h2 class="heading" data-aos="fade-up">Contact <span>Me</span></h2>
-    <div class="contact-cards">
-      <div class="contact-card whatsapp glass" data-aos="zoom-in-right">
-        <img src="ui/img/whatsapp-icon.svg" alt="WhatsApp">
-        <h3>WhatsApp</h3>
-        <p>Klik untuk chat langsung dengan saya via WhatsApp</p>
-        <a href="https://wa.me/6282111762085" target="_blank" class="btn-card">Chat WhatsApp</a>
-      </div>
-
-      <div class="contact-card github glass" data-aos="zoom-in">
-        <img src="ui/img/github-icon.png" alt="GitHub">
-        <h3>GitHub</h3>
-        <p>Lihat Profile atau projek saya lebih lengkap</p>
-        <a href="https://github.com/RakhaFR/" target="_blank" class="btn-card">To Profile</a>
-      </div>
-
-      <div class="contact-card discord glass" data-aos="zoom-in-left">
-        <img src="ui/img/discord-icon.svg" alt="Discord">
-        <h3>Discord</h3>
-        <p>Kirim pesan ke saya langsung lewat Discord</p>
-        <a href="https://discord.com/users/1274191390246440981" target="_blank" class="btn-card">Chat Discord</a>
-      </div>
+<!-- ── Contact ────────────────────────────────── -->
+<section class="contact full" id="contact">
+  <span class="section-pill dark" data-aos="fade-down">Contact</span>
+  <h2 class="heading dark-heading" data-aos="fade-up">Let's <em>Connect</em></h2>
+  <div class="contact-cards">
+    <div class="contact-card whatsapp" data-aos="zoom-in-right">
+      <span class="contact-pill">WhatsApp</span>
+      <div class="contact-handle">+62 821-1176-2085</div>
+      <p>Direct message for quick queries</p>
+      <a href="https://wa.me/6282111762085" target="_blank" class="btn-card">Open →</a>
     </div>
-  </section>
-
-  <!-- ── Footer ─────────────────────────────────── -->
-  <footer>
-    <div class="footer">
-      <p>Copyright &copy; 2026 By Rakha FR — All Rights Reserved</p>
+    <div class="contact-card github" data-aos="zoom-in">
+      <span class="contact-pill">GitHub</span>
+      <div class="contact-handle">github.com/RakhaFR</div>
+      <p>Explore my source code and repositories</p>
+      <a href="https://github.com/RakhaFR/" target="_blank" class="btn-card">Open →</a>
     </div>
-  </footer>
+    <div class="contact-card discord" data-aos="zoom-in-left">
+      <span class="contact-pill">Discord</span>
+      <div class="contact-handle">bangriyadi</div>
+      <p>Chat over Discord anytime</p>
+      <a href="https://discord.com/users/1274191390246440981" target="_blank" class="btn-card">Open →</a>
+    </div>
+  </div>
+</section>
 
-  <!-- Three.js Library via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- ── Footer ─────────────────────────────────── -->
+<footer>
+  <div class="footer">
+    <a href="#home-content" class="footer-logo">Rakha<span>.</span></a>
+    <p>© 2026 Rakha Fadilah Riyadi — All Rights Reserved</p>
+    <div class="footer-links">
+      <a href="https://github.com/RakhaFR/" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/bang_r1yad1/" target="_blank">Instagram</a>
+      <a href="https://wa.me/6282111762085" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</footer>
 
-  <!-- Firebase SDK Compat via CDN -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
-  <!-- Firebase Config (Dijalankan sebelum logic aplikasi) -->
-  <script src="firebase-config.js"></script>
-
-  <script src="aos/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 600,
-      delay: 100,
-      once: false,
-      easing: 'ease-out-cubic'
-    });
-  </script>
-  <script src="script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="aos/aos.js"></script>
+<script>AOS.init({ duration: 600, delay: 100, once: false, easing: 'ease-out-cubic' });</script>
+<script src="script.js"></script>
 </body>
-
 </html>
