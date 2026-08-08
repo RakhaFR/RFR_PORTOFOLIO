@@ -22,52 +22,57 @@
     }, 600);
   }
 
-  function lazyLoadImages() {
+  function preloadImages() {
+    // Ambil semua img di halaman kecuali yang di dalam loader
     const imgs = Array.from(document.querySelectorAll("img[src]")).filter(
-      (img) => !img.closest("#page-loader") && !img.hasAttribute("data-eager")
+      (img) => !img.closest("#page-loader")
     );
 
     if (imgs.length === 0) { hideLoader(); return; }
 
     let loaded = 0;
-    let fakeProgress = 5;
 
+    // Fake progress 0→20 dulu supaya progress bar langsung gerak
+    let fakeP = 0;
     const fakeInterval = setInterval(() => {
-      if (fakeProgress < 30) {
-        fakeProgress += 3;
-        setProgress(fakeProgress);
-      } else {
-        clearInterval(fakeInterval);
-      }
-    }, 120);
+      fakeP += 4;
+      setProgress(fakeP);
+      if (fakeP >= 20) clearInterval(fakeInterval);
+    }, 80);
 
     imgs.forEach((img) => {
-      const realSrc = img.getAttribute("src");
-      img.setAttribute("data-src", realSrc);
-      img.removeAttribute("src");
+      // Kalau gambar sudah complete (cached), hitung langsung
+      if (img.complete && img.naturalWidth > 0) {
+        loaded++;
+        setProgress(20 + (loaded / imgs.length) * 80);
+        if (loaded === imgs.length) { clearInterval(fakeInterval); hideLoader(); }
+        return;
+      }
 
+      // Preload via Image object — TANPA remove src dari DOM
+      // Supaya gambar di halaman tetap keliatan/proses load paralel
       const tempImg = new Image();
       tempImg.onload = tempImg.onerror = () => {
         loaded++;
-        img.setAttribute("src", realSrc);
-        const progress = 30 + (loaded / imgs.length) * 70;
+        const progress = 20 + (loaded / imgs.length) * 80;
         setProgress(progress);
         if (loaded === imgs.length) {
           clearInterval(fakeInterval);
           hideLoader();
         }
       };
-      tempImg.src = realSrc;
+      tempImg.src = img.src;
     });
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", lazyLoadImages);
+    document.addEventListener("DOMContentLoaded", preloadImages);
   } else {
-    lazyLoadImages();
+    preloadImages();
   }
 
-  setTimeout(hideLoader, 6000);
+  // Safety timeout — max 8 detik loader
+  setTimeout(hideLoader, 8000);
 })();
 
 /***********************************
@@ -189,6 +194,7 @@ window.addEventListener("click", (e) => {
 
   let maxShift = 0;
   let rafId    = null;
+  const aboutSection = document.querySelector(".about");
 
   /* ── Debounce helper ── */
   function debounce(fn, ms) {
@@ -208,9 +214,10 @@ window.addEventListener("click", (e) => {
     const trackW = track.scrollWidth;
 
     // maxShift: geser sampai kata terakhir bisa masuk tengah viewport.
-    // +vw*0.5 karena focusX ada di tengah, jadi track perlu geser lebih jauh
-    // supaya kata terakhir (yang tadinya di kanan) bisa sampai ke posisi tengah.
-    maxShift = Math.max(0, trackW - vw + vw * 0.5);
+    // Dikali 0.9 supaya scroll berhenti di 90% — Express JS masih keliatan
+    // di kiri saat about mulai reveal dari bawah
+    const fullShift = Math.max(0, trackW - vw + vw * 0.5);
+    maxShift = fullShift * 0.86;
 
     // Wrap height = 1 viewport + jarak scroll horizontal
     wrap.style.height = (vh + maxShift) + "px";
@@ -265,6 +272,33 @@ window.addEventListener("click", (e) => {
     // Progress bar
     inner.style.setProperty("--hscroll-progress", (progress * 100).toFixed(2) + "%");
 
+    // ── Reveal: About section clip-path dari bawah ke atas ──
+    // Pakai posisi about relatif viewport, bukan progress hscroll
+    // supaya timing reveal = saat about mulai masuk viewport dari bawah
+    if (aboutSection && !aboutSection.classList.contains("about-settled")) {
+      const aboutRect = aboutSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // aboutRect.top = jarak top about dari top viewport
+      // Reveal mulai saat top about ada di 100% vh (belum keliatan)
+      // Reveal selesai saat top about di 0 (tepat di top viewport)
+      const revealRange = vh * 0.6; // jarak scroll untuk full reveal
+      const distFromBottom = vh - aboutRect.top; // makin besar = makin masuk
+
+      const revealT = Math.max(0, Math.min(1, distFromBottom / revealRange));
+      const t = 1 - Math.pow(1 - revealT, 4);
+
+      if (revealT <= 0) {
+        aboutSection.style.clipPath = "inset(100% 0 0 0)";
+      } else if (revealT < 1) {
+        const clip = (100 * (1 - t)).toFixed(2);
+        aboutSection.style.clipPath = `inset(${clip}% 0 0 0)`;
+      } else {
+        aboutSection.classList.add("about-settled");
+        aboutSection.style.clipPath = "";
+      }
+    }
+
     // Highlight kata paling dekat ke TENGAH viewport
     const focusX = window.innerWidth * 0.5;
     const words  = track.querySelectorAll(".hscroll-word, .hscroll-sep");
@@ -289,6 +323,18 @@ window.addEventListener("click", (e) => {
   function init() {
     recalc();
     update();
+    // Fallback: jika saat load scrollY sudah melewati hscroll zone,
+    // langsung settled supaya about tidak stuck opacity:0
+    if (aboutSection && !aboutSection.classList.contains("about-fixed")) {
+      const wrapBottom = wrap.getBoundingClientRect().bottom + window.scrollY;
+      if (window.scrollY > wrapBottom) {
+        aboutSection.classList.remove("about-fixed");
+        aboutSection.classList.add("about-settled");
+        aboutSection.style.clipPath  = "";
+        aboutSection.style.transform = "";
+        aboutSection.style.opacity   = "";
+      }
+    }
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });

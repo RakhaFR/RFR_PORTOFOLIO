@@ -323,6 +323,7 @@ section.full { min-height:100vh; }
   position: relative;
   background: var(--black);
   /* PENTING: JANGAN overflow:hidden di sini, biarkan inner bisa fixed */
+  overflow: visible;
 }
 
 .hscroll-inner {
@@ -420,11 +421,30 @@ section.full { min-height:100vh; }
   .hscroll-word { font-size: clamp(3.5rem, 12vw, 6rem); padding-right: 8vw; }
   .hscroll-sep  { font-size: clamp(1.8rem, 5vw, 3rem);  padding-right: 8vw; }
 }
-.about {
-  background:var(--cream);
-  display:flex; align-items:center;
-  overflow:hidden;
+/* ─── Reveal: About section (clip-path, tetap normal flow) ─── */
+
+.hscroll-about-scene {
+  position: relative;
+  z-index: 0;
 }
+
+.about {
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  /* JS drive clip-path — default tersembunyi */
+  clip-path: inset(100% 0 0 0);
+  will-change: clip-path;
+}
+
+/* Setelah animasi selesai */
+.about.about-settled {
+  clip-path: none !important;
+}
+
 
 .about-inner {
   display:grid; grid-template-columns:1fr 1fr;
