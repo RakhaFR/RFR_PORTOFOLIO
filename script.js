@@ -207,8 +207,10 @@ window.addEventListener("click", (e) => {
     const vh     = window.innerHeight;
     const trackW = track.scrollWidth;
 
-    // maxShift: total px geser horizontal yang dibutuhkan
-    maxShift = Math.max(0, trackW - vw + vw * 0.08);
+    // maxShift: geser sampai kata terakhir bisa masuk tengah viewport.
+    // +vw*0.5 karena focusX ada di tengah, jadi track perlu geser lebih jauh
+    // supaya kata terakhir (yang tadinya di kanan) bisa sampai ke posisi tengah.
+    maxShift = Math.max(0, trackW - vw + vw * 0.5);
 
     // Wrap height = 1 viewport + jarak scroll horizontal
     wrap.style.height = (vh + maxShift) + "px";
@@ -263,8 +265,8 @@ window.addEventListener("click", (e) => {
     // Progress bar
     inner.style.setProperty("--hscroll-progress", (progress * 100).toFixed(2) + "%");
 
-    // Highlight kata paling dekat ke 35% dari kiri (titik baca alami)
-    const focusX = window.innerWidth * 0.35;
+    // Highlight kata paling dekat ke TENGAH viewport
+    const focusX = window.innerWidth * 0.5;
     const words  = track.querySelectorAll(".hscroll-word, .hscroll-sep");
     let   best   = null;
     let   bestD  = Infinity;

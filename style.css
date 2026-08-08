@@ -361,7 +361,10 @@ section.full { min-height:100vh; }
   display: flex;
   align-items: center;
   white-space: nowrap;
-  padding-left: 8vw;
+  /* padding-left 50vw: kata pertama (HTML) langsung di tengah saat pinStart */
+  padding-left: 50vw;
+  /* padding-right 50vw: kata terakhir bisa digeser sampai posisi tengah */
+  padding-right: 50vw;
   /* JS set transform: translateX(...) */
   will-change: transform;
 }
