@@ -299,9 +299,9 @@ window.addEventListener("click", (e) => {
       }
     }
 
-    // Highlight kata paling dekat ke TENGAH viewport
+    // Highlight kata paling dekat ke TENGAH viewport (hanya kata, bukan titik pemisah)
     const focusX = window.innerWidth * 0.5;
-    const words  = track.querySelectorAll(".hscroll-word, .hscroll-sep");
+    const words  = track.querySelectorAll(".hscroll-word");
     let   best   = null;
     let   bestD  = Infinity;
 
@@ -312,8 +312,13 @@ window.addEventListener("click", (e) => {
       if (d < bestD) { bestD = d; best = el; }
     });
 
-    words.forEach((el) => el.classList.remove("active-word"));
-    if (best) best.classList.add("active-word");
+    words.forEach((el) => {
+      if (el === best) {
+        el.classList.add("active-word");
+      } else {
+        el.classList.remove("active-word");
+      }
+    });
   }
 
   function onScroll() {
