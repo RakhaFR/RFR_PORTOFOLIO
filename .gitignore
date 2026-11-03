@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+.agents
+.vscode
+.idea
+*.log
+.DS_Store
+C:\Users\Asus\.opencode\plan

@@ -1,0 +1,25 @@
+{
+  "name": "rfr-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@gsap/react": "latest",
+    "framer-motion": "latest",
+    "gsap": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "@vitejs/plugin-react": "latest",
+    "tailwindcss": "^4.3.4",
+    "vite": "latest"
+  }
+}
