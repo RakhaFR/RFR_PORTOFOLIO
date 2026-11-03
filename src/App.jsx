@@ -899,10 +899,10 @@ export default function App() {
       const stackCards = gsap.utils.toArray(".journey-stack-card");
 
       stackCards.forEach((card, index) => {
-        // Trigger impact when the card reaches its sticky stack position during vertical scroll
+        // Trigger impact when the card reaches its sticky position during vertical scroll
         ScrollTrigger.create({
           trigger: card,
-          start: `top ${115 + index * 26}px`,
+          start: "top 125px",
           onEnter: () => {
             card.classList.remove("journey-shake-active");
             void card.offsetWidth;
@@ -923,17 +923,18 @@ export default function App() {
           },
         });
 
-        // Depth scale & dimming for underlying cards as user scrolls down
+        // Clean depth transition: as the next card arrives, smoothly fade & scale down the previous card
         if (index < stackCards.length - 1) {
           const nextCard = stackCards[index + 1];
           gsap.to(card, {
-            scale: 0.94 - index * 0.015,
-            filter: "brightness(0.65)",
-            ease: "none",
+            scale: 0.93,
+            opacity: 0.35,
+            filter: "brightness(0.5)",
+            ease: "power2.inOut",
             scrollTrigger: {
               trigger: nextCard,
               start: "top 70%",
-              end: "top 25%",
+              end: "top 20%",
               scrub: true,
             },
           });
@@ -1390,7 +1391,6 @@ export default function App() {
               key={stage.step}
               className="journey-stack-card"
               style={{
-                "--stack-idx": stageIdx,
                 zIndex: stageIdx + 1,
               }}
               onClick={() => triggerCardShock(stageIdx)}
