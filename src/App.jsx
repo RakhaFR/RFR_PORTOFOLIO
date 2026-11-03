@@ -141,159 +141,143 @@ const FloatingCodeWindows = () => {
   );
 };
 
-const SKILLS_JOURNEY = [
+const JOURNEY_STAGES = [
   {
-    id: "html",
-    name: "HTML5",
-    percent: "95%",
-    category: "Foundation",
-    stageNum: "STAGE 01",
-    icon: "/ui/img/html-icon.png",
-    desc: "Struktur dasar halaman web menggunakan elemen semantic, aksesibilitas modern, dan best practice arsitektur DOM.",
-    tags: ["Semantic HTML", "SEO Optimization", "Web Accessibility", "Clean DOM"],
-    status: "Mastered",
-    experience: "3+ Years",
+    step: "01",
+    phase: "PHASE 01 · 2022-2023",
+    stagePill: "FOUNDATION & WEB STANDARDS",
+    title: "Web Standards & Semantic Architecture",
+    summary:
+      "Awal mula perjalanan web engineering: mendalami struktur semantic HTML5, aksesibilitas modern, responsive box model, dan visual styling CSS3.",
+    skills: [
+      {
+        id: "html",
+        name: "HTML5",
+        percent: "95%",
+        level: "Mastered",
+        icon: "/ui/img/html-icon.png",
+        desc: "Struktur dasar semantic web, SEO, dan aksesibilitas.",
+      },
+      {
+        id: "css",
+        name: "CSS3",
+        percent: "96%",
+        level: "Mastered",
+        icon: "/ui/img/css-icon.svg",
+        desc: "Visual styling, responsive grid, flexbox, dan keyframes.",
+      },
+    ],
   },
   {
-    id: "css",
-    name: "CSS3",
-    percent: "96%",
-    category: "Foundation",
-    stageNum: "STAGE 01",
-    icon: "/ui/img/css-icon.svg",
-    desc: "Mendesain layout, visual styling, animasi keyframes, CSS Grid & Flexbox, dan responsive typography.",
-    tags: ["Flexbox & Grid", "Keyframes & Transitions", "Custom Properties", "Responsive Design"],
-    status: "Mastered",
-    experience: "3+ Years",
+    step: "02",
+    phase: "PHASE 02 · 2023-2024",
+    stagePill: "CLIENT-SIDE LOGIC & UTILITY",
+    title: "Client-Side Logic & Utility Styling",
+    summary:
+      "Mengembangkan interaktivitas dinamis dan efisiensi antarmuka tingkat tinggi menggunakan engine JavaScript modern serta ekosistem framework CSS utility-first.",
+    skills: [
+      {
+        id: "js",
+        name: "JavaScript",
+        percent: "70%",
+        level: "Proficient",
+        icon: "/ui/img/js-icon.svg",
+        desc: "Interaktivitas dinamis, DOM manipulation, dan async logic.",
+      },
+      {
+        id: "tailwind",
+        name: "Tailwind CSS",
+        percent: "80%",
+        level: "Advanced",
+        icon: "/ui/img/tailwind-icon.png",
+        desc: "Framework CSS utility-first untuk desain cepat & modern.",
+      },
+      {
+        id: "bootstrap",
+        name: "Bootstrap 5",
+        percent: "55%",
+        level: "Intermediate",
+        icon: "/ui/img/boostrap-icon.svg",
+        desc: "Prototyping cepat responsif dengan komponen modular.",
+      },
+    ],
   },
   {
-    id: "js",
-    name: "JavaScript",
-    percent: "70%",
-    category: "Core & Styling",
-    stageNum: "STAGE 02",
-    icon: "/ui/img/js-icon.svg",
-    desc: "Menambahkan interaktivitas, manipulasi DOM, logika async/await, closures, dan handling event lifecycle.",
-    tags: ["ES6+ Modern JS", "DOM Engine", "Async / Promises", "Event Listeners"],
-    status: "Proficient",
-    experience: "2+ Years",
+    step: "03",
+    phase: "PHASE 03 · 2024-2025",
+    stagePill: "MODERN REACTIVE FRONTEND",
+    title: "Reactive Component Architecture & APIs",
+    summary:
+      "Transisi ke ekosistem SPA & SSR berbasis komponen reaktif, sinkronisasi data client-server, asynchronous state, dan integrasi RESTful API.",
+    skills: [
+      {
+        id: "react",
+        name: "React.js",
+        percent: "50%",
+        level: "Active Focus",
+        icon: "/ui/img/react-icon.svg",
+        desc: "Pustaka UI reaktif Meta, custom hooks & virtual DOM.",
+      },
+      {
+        id: "nextjs",
+        name: "Next.js",
+        percent: "40%",
+        level: "Developing",
+        icon: "/ui/img/next-icon.svg",
+        desc: "Framework React dengan SSR, App Router, dan SEO built-in.",
+      },
+      {
+        id: "axios",
+        name: "Axios",
+        percent: "40%",
+        level: "Intermediate",
+        icon: "/ui/img/axios-icon.svg",
+        desc: "HTTP client promise-based untuk komunikasi REST API.",
+      },
+    ],
   },
   {
-    id: "tailwind",
-    name: "Tailwind CSS",
-    percent: "80%",
-    category: "Core & Styling",
-    stageNum: "STAGE 02",
-    icon: "/ui/img/tailwind-icon.png",
-    desc: "Framework CSS utility-first untuk styling instan, rapid UI design system, dark mode, dan layout modern.",
-    tags: ["Utility Classes", "Responsive Design", "Dark Mode", "Theme Config"],
-    status: "Advanced",
-    experience: "2 Years",
+    step: "04",
+    phase: "PHASE 04 · 2025-PRESENCE",
+    stagePill: "BACKEND SERVICES & SYSTEMS",
+    title: "Backend Services & System Architecture",
+    summary:
+      "Ekspansi kapabilitas ke computational backend, pengelolaan database relasional, API services, dan skrip otomasi komputasi tingkat lanjut.",
+    skills: [
+      {
+        id: "php",
+        name: "PHP",
+        percent: "45%",
+        level: "Intermediate",
+        icon: "/ui/img/php-icon.svg",
+        desc: "Server-side scripting, database MySQL, dan session auth.",
+      },
+      {
+        id: "laravel",
+        name: "Laravel",
+        percent: "35%",
+        level: "Exploring",
+        icon: "/ui/img/Laravel-icon.svg",
+        desc: "Framework MVC PHP elegan dengan Eloquent ORM & migrations.",
+      },
+      {
+        id: "python",
+        name: "PYTHON",
+        percent: "35%",
+        level: "Exploring",
+        icon: "/ui/img/python-icon.svg",
+        desc: "Bahasa komputer serbaguna untuk automasi dan algoritma dasar.",
+      },
+      {
+        id: "express",
+        name: "Express.js",
+        percent: "15%",
+        level: "Foundational",
+        icon: "/ui/img/express-icon.svg",
+        desc: "Framework Node.js minimalis untuk microservices & REST API.",
+      },
+    ],
   },
-  {
-    id: "bootstrap",
-    name: "Bootstrap 5",
-    percent: "55%",
-    category: "Core & Styling",
-    stageNum: "STAGE 02",
-    icon: "/ui/img/boostrap-icon.svg",
-    desc: "Framework CSS untuk membuat tampilan web cepat, responsif, dan komponen UI terstandarisasi.",
-    tags: ["Grid 12-Col", "Pre-built Components", "Responsive Breakpoints"],
-    status: "Intermediate",
-    experience: "2 Years",
-  },
-  {
-    id: "react",
-    name: "React",
-    percent: "50%",
-    category: "Modern Frontend",
-    stageNum: "STAGE 03",
-    icon: "/ui/img/react-icon.svg",
-    desc: "Pustaka JavaScript sumber terbuka buatan Meta untuk membangun UI interaktif, hooks, dan arsitektur komponen.",
-    tags: ["React Hooks", "Component Tree", "Virtual DOM", "Framer Motion"],
-    status: "Active Focus",
-    experience: "1+ Year",
-  },
-  {
-    id: "nextjs",
-    name: "Next JS",
-    percent: "40%",
-    category: "Modern Frontend",
-    stageNum: "STAGE 03",
-    icon: "/ui/img/next-icon.svg",
-    desc: "Kerangka kerja (framework) berbasis React dari Vercel dengan App Router, SSR, SSG, dan image optimization.",
-    tags: ["App Router", "SSR / SSG", "Server Components", "API Endpoints"],
-    status: "Developing",
-    experience: "1 Year",
-  },
-  {
-    id: "axios",
-    name: "Axios",
-    percent: "40%",
-    category: "Modern Frontend",
-    stageNum: "STAGE 03",
-    icon: "/ui/img/axios-icon.svg",
-    desc: "Pustaka JavaScript populer untuk membuat request HTTP RESTful dari browser atau Node.js dengan interceptor.",
-    tags: ["RESTful API", "Promise-Based", "Interceptors", "JSON Parsing"],
-    status: "Intermediate",
-    experience: "1 Year",
-  },
-  {
-    id: "php",
-    name: "PHP",
-    percent: "45%",
-    category: "Backend & Systems",
-    stageNum: "STAGE 04",
-    icon: "/ui/img/php-icon.svg",
-    desc: "Bahasa server-side untuk membangun website dinamis, session management, dan koneksi database MySQL.",
-    tags: ["OOP PHP", "MySQL Database", "CRUD Operations", "Session Auth"],
-    status: "Intermediate",
-    experience: "1.5 Years",
-  },
-  {
-    id: "laravel",
-    name: "Laravel",
-    percent: "35%",
-    category: "Backend & Systems",
-    stageNum: "STAGE 04",
-    icon: "/ui/img/Laravel-icon.svg",
-    desc: "Framework PHP dengan arsitektur MVC yang elegan, routing rapi, migration database, dan Eloquent ORM.",
-    tags: ["MVC Architecture", "Eloquent ORM", "Blade Engine", "Database Migrations"],
-    status: "Exploring",
-    experience: "1 Year",
-  },
-  {
-    id: "python",
-    name: "PYTHON",
-    percent: "35%",
-    category: "Backend & Systems",
-    stageNum: "STAGE 04",
-    icon: "/ui/img/python-icon.svg",
-    desc: "Bahasa pemrograman komputer tingkat tinggi yang serbaguna, ramah pemula, dan cocok untuk automasi skrip.",
-    tags: ["Core Scripting", "Automation", "Data Types", "Algorithms"],
-    status: "Exploring",
-    experience: "1 Year",
-  },
-  {
-    id: "express",
-    name: "Express JS",
-    percent: "15%",
-    category: "Backend & Systems",
-    stageNum: "STAGE 04",
-    icon: "/ui/img/express-icon.svg",
-    desc: "Kerangka kerja aplikasi web minimalis dan fleksibel untuk Node.js dalam membangun REST API cepat.",
-    tags: ["Node.js Runtime", "Middleware Stack", "REST Endpoints", "Microservices"],
-    status: "Foundational",
-    experience: "6 Months",
-  },
-];
-
-const STAGE_FILTERS = [
-  { id: "all", label: "All Milestones" },
-  { id: "Foundation", label: "Foundation" },
-  { id: "Core & Styling", label: "Core & Styling" },
-  { id: "Modern Frontend", label: "Modern Frontend" },
-  { id: "Backend & Systems", label: "Backend & Systems" },
 ];
 
 export default function App() {
@@ -304,11 +288,9 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Skill Journey States
-  const [activeSkillIdx, setActiveSkillIdx] = useState(0);
-  const [activeStageFilter, setActiveStageFilter] = useState("all");
-  const [isSkillAnimating, setIsSkillAnimating] = useState(false);
-  const [splashKey, setSplashKey] = useState(0);
+  // Skill Journey Stacking States
+  const [activeShockIdx, setActiveShockIdx] = useState(null);
+  const [shockKey, setShockKey] = useState(0);
 
   // Firebase Chat States
   const [currentUser, setCurrentUser] = useState(null);
@@ -644,31 +626,14 @@ export default function App() {
     }
   };
 
-  // Skill Journey Interactive Handlers
-  const handleSelectSkill = (index) => {
-    if (activeSkillIdx === index && isSkillAnimating) return;
-    setSplashKey((k) => k + 1);
-    setIsSkillAnimating(true);
-    setActiveSkillIdx(index);
+  // Skill Journey Stacking Shock Trigger
+  const triggerCardShock = (index) => {
+    setActiveShockIdx(index);
+    setShockKey((k) => k + 1);
     setTimeout(() => {
-      setIsSkillAnimating(false);
-    }, 450);
+      setActiveShockIdx((cur) => (cur === index ? null : cur));
+    }, 550);
   };
-
-  const handleNextSkill = () => {
-    handleSelectSkill((activeSkillIdx + 1) % SKILLS_JOURNEY.length);
-  };
-
-  const handlePrevSkill = () => {
-    handleSelectSkill((activeSkillIdx - 1 + SKILLS_JOURNEY.length) % SKILLS_JOURNEY.length);
-  };
-
-  const currentSkill = SKILLS_JOURNEY[activeSkillIdx] || SKILLS_JOURNEY[0];
-
-  const filteredSkills =
-    activeStageFilter === "all"
-      ? SKILLS_JOURNEY
-      : SKILLS_JOURNEY.filter((s) => s.category === activeStageFilter);
 
   // ═══════════════════════════════════════════════════════════════
   // GSAP 60FPS MASTER TIMELINES & SCROLLTRIGGERS
@@ -919,7 +884,7 @@ export default function App() {
           "-=0.5"
         );
 
-      // ── 7. Skills Journey Section Entrance ──────────────────
+      // ── 7. Skills Vertical Stacking Cards & Scroll Trigger ───
       const skillTl = gsap.timeline({
         scrollTrigger: {
           trigger: "#skill",
@@ -929,20 +894,51 @@ export default function App() {
       });
       skillTl
         .from("#skill .section-pill", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#skill .heading", { y: 50, opacity: 0, rotationX: -15, duration: 0.9, ease: "power4.out" }, "-=0.4")
-        .from("#skill .journey-stage-bar", { y: 25, opacity: 0, duration: 0.6, ease: "power3.out" }, "-=0.5")
-        .fromTo(
-          "#skill .journey-featured-deck",
-          { opacity: 0, y: 50, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.4"
-        )
-        .fromTo(
-          "#skill .journey-node-card",
-          { opacity: 0, y: 35, scale: 0.93 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.04, duration: 0.6, ease: "power3.out" },
-          "-=0.5"
-        );
+        .from("#skill .heading", { y: 50, opacity: 0, rotationX: -15, duration: 0.9, ease: "power4.out" }, "-=0.4");
+
+      const stackCards = gsap.utils.toArray(".journey-stack-card");
+
+      stackCards.forEach((card, index) => {
+        // Trigger impact when the card reaches its sticky stack position during vertical scroll
+        ScrollTrigger.create({
+          trigger: card,
+          start: `top ${115 + index * 26}px`,
+          onEnter: () => {
+            card.classList.remove("journey-shake-active");
+            void card.offsetWidth;
+            card.classList.add("journey-shake-active");
+            triggerCardShock(index);
+
+            const fills = card.querySelectorAll(".tile-bar-fill");
+            fills.forEach((fill) => {
+              const targetW = fill.getAttribute("data-percent") || "0%";
+              gsap.fromTo(fill, { width: "0%" }, { width: targetW, duration: 1.1, ease: "power4.out" });
+            });
+          },
+          onEnterBack: () => {
+            card.classList.remove("journey-shake-active");
+            void card.offsetWidth;
+            card.classList.add("journey-shake-active");
+            triggerCardShock(index);
+          },
+        });
+
+        // Depth scale & dimming for underlying cards as user scrolls down
+        if (index < stackCards.length - 1) {
+          const nextCard = stackCards[index + 1];
+          gsap.to(card, {
+            scale: 0.94 - index * 0.015,
+            filter: "brightness(0.65)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextCard,
+              start: "top 70%",
+              end: "top 25%",
+              scrub: true,
+            },
+          });
+        }
+      });
 
       // ── 8. Certificates / Slider Entrance ───────────────────
       const sliderTl = gsap.timeline({
@@ -1381,147 +1377,72 @@ export default function App() {
         </motion.div>
       )}
 
-      {/* ── Skills (Interactive Journey Roadmap System) ─── */}
+      {/* ── Skills (Vertical Stacking Journey Roadmap) ─── */}
       <section className="skill full" id="skill">
         <span className="section-pill light">Roadmap</span>
         <h2 className="heading">
           Technical <span>Journey</span>
         </h2>
 
-        <div className="journey-container">
-          {/* Stage Filter Bar */}
-          <div className="journey-stage-bar">
-            {STAGE_FILTERS.map((stage) => {
-              const count =
-                stage.id === "all"
-                  ? SKILLS_JOURNEY.length
-                  : SKILLS_JOURNEY.filter((s) => s.category === stage.id).length;
-              return (
-                <button
-                  key={stage.id}
-                  className={`stage-pill-btn ${activeStageFilter === stage.id ? "active" : ""}`}
-                  onClick={() => setActiveStageFilter(stage.id)}
-                >
-                  <span>{stage.label}</span>
-                  <span style={{ opacity: 0.65, fontSize: "1.1rem" }}>({count})</span>
-                </button>
-              );
-            })}
-          </div>
+        <div className="journey-stack-wrapper">
+          {JOURNEY_STAGES.map((stage, stageIdx) => (
+            <div
+              key={stage.step}
+              className="journey-stack-card"
+              style={{
+                "--stack-idx": stageIdx,
+                zIndex: stageIdx + 1,
+              }}
+              onClick={() => triggerCardShock(stageIdx)}
+            >
+              {activeShockIdx === stageIdx && (
+                <>
+                  <div key={`splash-${shockKey}`} className="journey-splash-ring" />
+                  <div key={`flash-${shockKey}`} className="journey-flash-layer" />
+                </>
+              )}
 
-          {/* Focal Milestone Cockpit with Impact Feedback (Splash, Flash, Shake) */}
-          <div className={`journey-featured-deck ${isSkillAnimating ? "journey-shake-active" : ""}`}>
-            {isSkillAnimating && (
-              <>
-                <div key={`splash-${splashKey}`} className="journey-splash-ring" />
-                <div key={`flash-${splashKey}`} className="journey-flash-layer" />
-              </>
-            )}
-
-            <div className="journey-info-left">
-              <div className="journey-node-meta">
-                <span className="journey-stage-tag">
-                  {currentSkill.stageNum} · {currentSkill.category}
-                </span>
-                <span className="journey-node-counter">
-                  Node #{String(activeSkillIdx + 1).padStart(2, "0")} / {String(SKILLS_JOURNEY.length).padStart(2, "0")}
-                </span>
+              <div className="journey-card-top-bar">
+                <span className="journey-phase-badge">{stage.phase}</span>
+                <span className="journey-card-step-num">STEP {stage.step}</span>
               </div>
 
-              <div className="journey-title-wrap">
-                <div className="journey-icon-housing">
-                  <img src={currentSkill.icon} alt={currentSkill.name} />
-                </div>
-                <div>
-                  <h3 className="journey-skill-name">{currentSkill.name}</h3>
-                  <span style={{ fontFamily: "var(--mono)", fontSize: "1.2rem", color: "var(--lime)", fontWeight: 600 }}>
-                    Status: {currentSkill.status} · {currentSkill.experience}
-                  </span>
-                </div>
+              <div className="journey-card-meta">
+                <h3 className="journey-card-title">{stage.title}</h3>
+                <p className="journey-card-summary">{stage.summary}</p>
               </div>
 
-              <p className="journey-skill-desc">{currentSkill.desc}</p>
+              <div className="journey-skills-tile-grid">
+                {stage.skills.map((skill) => (
+                  <div key={skill.id} className="journey-skill-tile">
+                    <div className="tile-header">
+                      <div className="tile-icon-box">
+                        <img src={skill.icon} alt={skill.name} />
+                      </div>
+                      <span className="tile-status-tag">{skill.level}</span>
+                    </div>
 
-              <div className="journey-tag-row">
-                {currentSkill.tags.map((tag, i) => (
-                  <span key={i} className="journey-tag">
-                    #{tag}
-                  </span>
+                    <h4 className="tile-title">{skill.name}</h4>
+                    <p className="tile-desc">{skill.desc}</p>
+
+                    <div className="tile-meter-wrap">
+                      <div className="tile-meter-labels">
+                        <span className="tile-progress-lbl">Mastery Level</span>
+                        <span className="tile-percent-val">{skill.percent}</span>
+                      </div>
+                      <div className="tile-bar-track">
+                        <div
+                          className="tile-bar-fill"
+                          data-percent={skill.percent}
+                          style={{ width: skill.percent }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-
-            <div className="journey-telemetry-right">
-              <div className="telemetry-header">
-                <span className="telemetry-label">Roadmap Mastery Level</span>
-                <span className="telemetry-percent-huge">{currentSkill.percent}</span>
-              </div>
-
-              <div className="journey-meter-bar">
-                <div className="journey-meter-fill" style={{ width: currentSkill.percent }} />
-              </div>
-
-              <div className="telemetry-status-row">
-                <span>Proficiency Status</span>
-                <span className="status-badge">{currentSkill.status}</span>
-              </div>
-
-              <div className="journey-nav-buttons">
-                <button className="journey-btn" onClick={handlePrevSkill}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "1.8rem" }}>
-                    arrow_back
-                  </span>
-                  <span>Previous</span>
-                </button>
-                <button className="journey-btn" onClick={handleNextSkill}>
-                  <span>Next Step</span>
-                  <span className="material-symbols-outlined" style={{ fontSize: "1.8rem" }}>
-                    arrow_forward
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* 12-Node Roadmap Matrix Grid */}
-          <div className="journey-nodes-header">
-            <h3>Milestone Matrix Nodes (Click to Inspect & Trigger)</h3>
-            <span style={{ fontFamily: "var(--mono)", fontSize: "1.15rem", color: "var(--lime)" }}>
-              {filteredSkills.length} Nodes Displayed
-            </span>
-          </div>
-
-          <div className="journey-nodes-grid">
-            {filteredSkills.map((skill) => {
-              const originalIndex = SKILLS_JOURNEY.findIndex((s) => s.id === skill.id);
-              const isActive = originalIndex === activeSkillIdx;
-              return (
-                <InteractiveTiltCard
-                  key={skill.id}
-                  className={`journey-node-card ${isActive ? "active-node" : ""}`}
-                  onClick={() => handleSelectSkill(originalIndex)}
-                >
-                  <div className="node-card-top">
-                    <span className="node-number">#{String(originalIndex + 1).padStart(2, "0")}</span>
-                    <img src={skill.icon} alt={skill.name} />
-                  </div>
-                  <div className="node-card-content">
-                    <h4>{skill.name}</h4>
-                    <p>{skill.desc}</p>
-                  </div>
-                  <div className="node-card-footer">
-                    <div className="node-meter-info">
-                      <span>Progress</span>
-                      <span>{skill.percent}</span>
-                    </div>
-                    <div className="node-meter-bar">
-                      <div className="node-meter-fill" style={{ width: skill.percent }} />
-                    </div>
-                  </div>
-                </InteractiveTiltCard>
-              );
-            })}
-          </div>
+          ))}
         </div>
       </section>
 
