@@ -715,11 +715,12 @@ export default function App() {
       // ── 1. Hero Cinematic Entrance Timeline ──────────────────
       const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       heroTl
+        .from(".hero-location-text", { y: -20, opacity: 0, duration: 0.6 }, 0.05)
         .fromTo(
           ".hero-title-word",
           { yPercent: 120, opacity: 0 },
           { yPercent: 0, opacity: 1, stagger: 0.14, duration: 1.1, ease: "power4.out" },
-          0.1
+          0.15
         )
         .from(".home-content p", { y: 25, opacity: 0, duration: 0.8 }, 0.5)
         .from(".btn-box a", { y: 25, opacity: 0, stagger: 0.1, duration: 0.6 }, 0.7)
@@ -893,12 +894,6 @@ export default function App() {
           { opacity: 0, y: 35, scale: 0.94 },
           { opacity: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.5, ease: "power3.out" },
           "-=0.3"
-        )
-        .fromTo(
-          "#about .about-photo-badge",
-          { opacity: 0, y: 15, scale: 0.85 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.06, duration: 0.35, ease: "back.out(1.7)" },
-          "-=0.2"
         );
 
       // Smooth Scroll Parallax between the two About photos
@@ -1116,6 +1111,7 @@ export default function App() {
         <FloatingCodeWindows />
 
         <div className="content">
+          <p className="hero-location-text">Bogor, West Java</p>
           <h1>
             <span className="hero-title-line">
               <span className="hero-title-word">Rakha</span>
@@ -1260,17 +1256,9 @@ export default function App() {
             <div className="about-img-grid">
               <div className="about-img-item">
                 <img src="/img/gallery/mukaGanteng.jpg" alt="Rakha FR Portrait" loading="eager" />
-                <div className="about-photo-badge">
-                  <span className="badge-dot" />
-                  <span>Rakha FR</span>
-                </div>
               </div>
               <div className="about-img-item offset">
                 <img src="/img/gallery/mukaGanteng2.jpeg" alt="Rakha FR Creative Dev" loading="eager" />
-                <div className="about-photo-badge">
-                  <span className="badge-dot" />
-                  <span>Creative Dev</span>
-                </div>
               </div>
             </div>
           </div>

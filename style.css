@@ -165,6 +165,17 @@ section.full { min-height:100vh; }
 }
 @keyframes pulseDot { 0%,100%{transform:scale(.9);opacity:.7} 50%{transform:scale(1.2);opacity:1} }
 
+.hero-location-text {
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 1.2rem;
+  display: inline-block;
+}
+
 .content h1 {
   font-family:var(--serif); font-size:clamp(5.5rem,9vw,11rem);
   font-weight:900; line-height:1.0; letter-spacing:-2px; color:var(--white);
