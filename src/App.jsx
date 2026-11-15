@@ -1681,10 +1681,9 @@ export default function App() {
               <p className="brand-bio">
                 Front-end developer & creative coder from Bogor. Crafting aesthetic, accessible, and fast web experiences.
               </p>
-              <div className="footer-live-status">
-                <span className="live-pulse-dot" />
+              {/* <div className="footer-live-status">
                 <span>AVAILABLE FOR WORK · 2026</span>
-              </div>
+              </div> */}
             </div>
 
             <div className="footer-col">
@@ -1715,7 +1714,7 @@ export default function App() {
             <div className="footer-col">
               <span className="footer-col-header">CONNECT</span>
               <div className="footer-link-list">
-                <a href="mailto:rakhafadilahriyadi@gmail.com">rakhafadilahriyadi@gmail.com</a>
+                <a href="mailto:rakhafr112@gmail.com">rakhafr112@gmail.com</a>
                 <a href="https://wa.me/6282111762085" target="_blank" rel="noreferrer">
                   +62 821-1176-2085
                 </a>
