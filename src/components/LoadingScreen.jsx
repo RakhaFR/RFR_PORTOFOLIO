@@ -55,7 +55,6 @@ export function LoadingScreen({ onDone }) {
         {/* Logo / Name */}
         <div className="loading-logo">
           <span className="loading-name">RFR</span>
-          <span className="loading-dot" />
         </div>
 
         {/* Progress bar */}
