@@ -288,10 +288,6 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // Skill Journey Stacking States
-  const [activeShockIdx, setActiveShockIdx] = useState(null);
-  const [shockKey, setShockKey] = useState(0);
-
   // Firebase Chat States
   const [currentUser, setCurrentUser] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -626,13 +622,20 @@ export default function App() {
     }
   };
 
-  // Skill Journey Stacking Shock Trigger
+  // Skill Journey Click / Trigger Visual Effect
   const triggerCardShock = (index) => {
-    setActiveShockIdx(index);
-    setShockKey((k) => k + 1);
-    setTimeout(() => {
-      setActiveShockIdx((cur) => (cur === index ? null : cur));
-    }, 550);
+    const card = document.querySelectorAll(".journey-stack-card")[index];
+    if (!card) return;
+    const flash = card.querySelector(".journey-flash-layer");
+    const splash = card.querySelector(".journey-splash-ring");
+    if (flash) gsap.fromTo(flash, { opacity: 0.7 }, { opacity: 0, duration: 0.5, ease: "power2.out" });
+    if (splash) {
+      gsap.fromTo(
+        splash,
+        { scale: 0.2, opacity: 0.95 },
+        { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }
+      );
+    }
   };
 
   // ═══════════════════════════════════════════════════════════════
@@ -899,42 +902,50 @@ export default function App() {
       const stackCards = gsap.utils.toArray(".journey-stack-card");
 
       stackCards.forEach((card, index) => {
-        // Trigger impact when the card reaches its sticky position during vertical scroll
+        const flash = card.querySelector(".journey-flash-layer");
+        const splash = card.querySelector(".journey-splash-ring");
+        const fills = card.querySelectorAll(".tile-bar-fill");
+
+        // Animate progress bars once when card first appears in viewport
         ScrollTrigger.create({
           trigger: card,
-          start: "top 125px",
+          start: "top 85%",
+          once: true,
           onEnter: () => {
-            card.classList.remove("journey-shake-active");
-            void card.offsetWidth;
-            card.classList.add("journey-shake-active");
-            triggerCardShock(index);
-
-            const fills = card.querySelectorAll(".tile-bar-fill");
             fills.forEach((fill) => {
               const targetW = fill.getAttribute("data-percent") || "0%";
-              gsap.fromTo(fill, { width: "0%" }, { width: targetW, duration: 1.1, ease: "power4.out" });
+              gsap.fromTo(fill, { width: "0%" }, { width: targetW, duration: 1.2, ease: "power3.out" });
             });
-          },
-          onEnterBack: () => {
-            card.classList.remove("journey-shake-active");
-            void card.offsetWidth;
-            card.classList.add("journey-shake-active");
-            triggerCardShock(index);
           },
         });
 
-        // Clean depth transition: as the next card arrives, smoothly fade & scale down the previous card
+        // Trigger visual impact (flash + splash shockwave) when card reaches its sticky position
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 115px",
+          onEnter: () => {
+            if (flash) gsap.fromTo(flash, { opacity: 0.7 }, { opacity: 0, duration: 0.5, ease: "power2.out" });
+            if (splash) {
+              gsap.fromTo(
+                splash,
+                { scale: 0.2, opacity: 0.95 },
+                { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }
+              );
+            }
+          },
+        });
+
+        // Smooth depth transition: as the next card arrives, smoothly dim & slightly scale down the previous card
         if (index < stackCards.length - 1) {
           const nextCard = stackCards[index + 1];
           gsap.to(card, {
-            scale: 0.93,
-            opacity: 0.35,
-            filter: "brightness(0.5)",
-            ease: "power2.inOut",
+            scale: 0.95,
+            filter: "brightness(0.65)",
+            ease: "none",
             scrollTrigger: {
               trigger: nextCard,
-              start: "top 70%",
-              end: "top 20%",
+              start: "top 60%",
+              end: "top 100px",
               scrub: true,
             },
           });
@@ -1395,12 +1406,10 @@ export default function App() {
               }}
               onClick={() => triggerCardShock(stageIdx)}
             >
-              {activeShockIdx === stageIdx && (
-                <>
-                  <div key={`splash-${shockKey}`} className="journey-splash-ring" />
-                  <div key={`flash-${shockKey}`} className="journey-flash-layer" />
-                </>
-              )}
+              <div className="journey-card-fx" aria-hidden="true">
+                <div className="journey-splash-ring" />
+                <div className="journey-flash-layer" />
+              </div>
 
               <div className="journey-card-top-bar">
                 <span className="journey-phase-badge">{stage.phase}</span>

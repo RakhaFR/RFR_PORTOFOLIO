@@ -351,24 +351,28 @@
   flex-direction: column;
   position: relative;
   z-index: 2;
-  padding-bottom: 6vh;
+  padding-bottom: 4rem;
 }
 
 /* Individual Stackable Card */
 .journey-stack-card {
   position: sticky;
-  top: 110px;
+  top: 100px;
   width: 100%;
   background: #111411;
   border: 1px solid rgba(186, 255, 79, 0.28);
-  border-radius: 24px;
+  border-radius: 20px;
   padding: 3rem 3.6rem;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
   transform-origin: center top;
-  will-change: transform, filter, opacity;
+  will-change: transform, filter;
   transition: border-color 0.35s ease, box-shadow 0.35s ease;
   overflow: hidden;
-  margin-bottom: 22vh;
+  margin-bottom: 45vh;
+}
+
+.journey-stack-card:last-child {
+  margin-bottom: 4rem;
 }
 
 .journey-stack-card:hover {
@@ -376,67 +380,37 @@
   box-shadow: 0 35px 85px rgba(0, 0, 0, 0.98), 0 0 45px rgba(186, 255, 79, 0.15);
 }
 
-/* Impact: Shake Vibration */
-@keyframes journeyImpactShake {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  15% { transform: translate(-4px, 2px) rotate(-0.8deg); }
-  30% { transform: translate(4px, -3px) rotate(0.8deg); }
-  45% { transform: translate(-3px, -1px) rotate(-0.4deg); }
-  60% { transform: translate(3px, 2px) rotate(0.5deg); }
-  75% { transform: translate(-2px, 1px) rotate(-0.2deg); }
-  90% { transform: translate(1px, -1px) rotate(0.1deg); }
-}
-
-.journey-shake-active {
-  animation: journeyImpactShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-/* Impact: Flash Sweep */
-@keyframes journeyFlashSweep {
-  0% { opacity: 0; }
-  25% { opacity: 0.9; }
-  100% { opacity: 0; }
+/* Visual FX Container */
+.journey-card-fx {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 15;
 }
 
 .journey-flash-layer {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(circle at center, rgba(186, 255, 79, 0.45) 0%, rgba(255, 255, 255, 0.25) 30%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(186, 255, 79, 0.45) 0%, rgba(255, 255, 255, 0.2) 30%, transparent 70%);
   pointer-events: none;
-  z-index: 20;
-  animation: journeyFlashSweep 0.5s ease-out forwards;
-}
-
-/* Impact: Radial Shockwave Splash */
-@keyframes journeyShockwave {
-  0% {
-    transform: translate(-50%, -50%) scale(0.15);
-    opacity: 1;
-    border-width: 5px;
-  }
-  60% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(3.2);
-    opacity: 0;
-    border-width: 1px;
-  }
+  opacity: 0;
 }
 
 .journey-splash-ring {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 260px;
-  height: 260px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   border: 3px solid var(--lime);
-  box-shadow: 0 0 60px var(--lime), inset 0 0 35px rgba(186, 255, 79, 0.6);
+  box-shadow: 0 0 50px var(--lime), inset 0 0 30px rgba(186, 255, 79, 0.6);
   pointer-events: none;
-  z-index: 18;
-  animation: journeyShockwave 0.65s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
 }
 
 /* Card Header */
@@ -651,7 +625,7 @@
 @media (max-width: 960px) {
   .journey-stack-card {
     padding: 2.4rem 2rem;
-    margin-bottom: 16vh;
+    margin-bottom: 25vh;
   }
   .journey-skills-tile-grid {
     grid-template-columns: 1fr;
@@ -665,8 +639,7 @@
   .hero-shimmer,
   .card-spotlight,
   .journey-splash-ring,
-  .journey-flash-layer,
-  .journey-shake-active {
+  .journey-flash-layer {
     display: none !important;
     animation: none !important;
   }
