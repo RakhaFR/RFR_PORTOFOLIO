@@ -45,6 +45,28 @@ export function SpotifyPlayer() {
     y.set(window.innerHeight - PILL_H - SNAP_PAD);
   }, []);
 
+  // Reposition on window resize / F11 fullscreen toggle
+  useEffect(() => {
+    const handleResize = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const ex = x.get();
+      const ey = y.get();
+      const ew = isMinimized ? PILL_W : CARD_W;
+      const eh = isMinimized ? PILL_H : CARD_H;
+
+      // Clamp back inside new viewport bounds
+      const clampedX = Math.max(SNAP_PAD, Math.min(vw - ew - SNAP_PAD, ex));
+      const clampedY = Math.max(SNAP_PAD, Math.min(vh - eh - SNAP_PAD, ey));
+
+      x.set(clampedX);
+      y.set(clampedY);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isMinimized]);
+
   // Autoplay
   useEffect(() => {
     const audio = audioRef.current;
