@@ -10,20 +10,21 @@ const formatTime = (seconds) => {
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 };
 
-// Snap threshold: distance from viewport corner to trigger magnetic snap
-const SNAP_THRESHOLD = 150;
-// Padding from viewport edge when snapped
-const SNAP_PADDING = 24;
+const SNAP_THRESHOLD = 160;
+const SNAP_PAD = 24;
+const PILL_W = 270;
+const PILL_H = 58;
+const CARD_W = 310;
+const CARD_H = 300;
 
 export function SpotifyPlayer() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
 
-  // Scale state (hold corner grip to resize)
   const [scale, setScale] = useState(1);
   const isResizingRef = useRef(false);
   const startYRef = useRef(0);
@@ -33,18 +34,18 @@ export function SpotifyPlayer() {
   const containerRef = useRef(null);
   const dragControls = useDragControls();
 
-  // Framer Motion position values — start at bottom-left corner (pill mode)
-  const x = useMotionValue(SNAP_PADDING);
-  const y = useMotionValue(-(SNAP_PADDING));
+  // Start at top-left origin; corrected to bottom-left after mount
+  const x = useMotionValue(SNAP_PAD);
+  const y = useMotionValue(0);
 
   const currentTrack = PLAYLIST[currentIdx];
 
-  // Start minimized at bottom-left corner
+  // Set correct initial bottom-left position after first render
   useEffect(() => {
-    setIsMinimized(true);
+    y.set(window.innerHeight - PILL_H - SNAP_PAD);
   }, []);
 
-  // Try autoplay or wait for first user gesture
+  // Autoplay
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -52,33 +53,30 @@ export function SpotifyPlayer() {
 
     const tryPlay = () => {
       audio.play()
-        .then(() => { setIsPlaying(true); setHasInteracted(true); removeListeners(); })
+        .then(() => { setIsPlaying(true); setHasInteracted(true); off(); })
         .catch(() => {});
     };
 
-    const handleFirstGesture = () => {
-      if (!hasInteracted) {
-        setHasInteracted(true);
-        audio.play().then(() => setIsPlaying(true)).catch(() => {});
-        removeListeners();
-      }
+    const onGesture = () => {
+      setHasInteracted(true);
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+      off();
     };
 
-    const removeListeners = () => {
-      window.removeEventListener("pointerdown", handleFirstGesture);
-      window.removeEventListener("keydown", handleFirstGesture);
-      window.removeEventListener("scroll", handleFirstGesture);
+    const off = () => {
+      window.removeEventListener("pointerdown", onGesture);
+      window.removeEventListener("keydown", onGesture);
+      window.removeEventListener("scroll", onGesture);
     };
 
     tryPlay();
-    window.addEventListener("pointerdown", handleFirstGesture, { once: true });
-    window.addEventListener("keydown", handleFirstGesture, { once: true });
-    window.addEventListener("scroll", handleFirstGesture, { once: true });
-
-    return removeListeners;
+    window.addEventListener("pointerdown", onGesture, { once: true });
+    window.addEventListener("keydown", onGesture, { once: true });
+    window.addEventListener("scroll", onGesture, { once: true });
+    return off;
   }, []);
 
-  // Update track on change
+  // Track change
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -93,12 +91,8 @@ export function SpotifyPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
     setHasInteracted(true);
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-    } else {
-      audio.play().then(() => setIsPlaying(true)).catch(console.error);
-    }
+    if (isPlaying) { audio.pause(); setIsPlaying(false); }
+    else { audio.play().then(() => setIsPlaying(true)).catch(console.error); }
   };
 
   const handleNext = () => setCurrentIdx((p) => (p + 1) % PLAYLIST.length);
@@ -110,14 +104,13 @@ export function SpotifyPlayer() {
     if (audioRef.current) { audioRef.current.currentTime = t; setCurrentTime(t); }
   };
 
-  // Resize grip handler
+  // Resize grip
   const handleResizeStart = (e) => {
     e.stopPropagation();
     e.preventDefault();
     isResizingRef.current = true;
     startYRef.current = e.clientY;
     startScaleRef.current = scale;
-
     const onMove = (ev) => {
       if (!isResizingRef.current) return;
       const delta = startYRef.current - ev.clientY;
@@ -132,57 +125,51 @@ export function SpotifyPlayer() {
     window.addEventListener("pointerup", onUp);
   };
 
-  // Magnetic snap logic on drag end
+  // Magnetic snap
   const handleDragEnd = () => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const rect = el.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    // Center of the dragged element
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
+    const ex = x.get();
+    const ey = y.get();
+    const ew = isMinimized ? PILL_W : CARD_W;
+    const eh = isMinimized ? PILL_H : CARD_H;
 
-    // Distance from each corner
+    // Center of element
+    const cx = ex + ew / 2;
+    const cy = ey + eh / 2;
+
     const corners = [
-      { name: "tl", dx: cx, dy: cy },                           // top-left
-      { name: "tr", dx: vw - cx, dy: cy },                      // top-right
-      { name: "bl", dx: cx, dy: vh - cy },                      // bottom-left
-      { name: "br", dx: vw - cx, dy: vh - cy },                 // bottom-right
+      { name: "tl", px: 0,  py: 0  },
+      { name: "tr", px: vw, py: 0  },
+      { name: "bl", px: 0,  py: vh },
+      { name: "br", px: vw, py: vh },
     ];
+
     const nearest = corners.reduce((a, b) =>
-      Math.hypot(a.dx, a.dy) < Math.hypot(b.dx, b.dy) ? a : b
+      Math.hypot(cx - a.px, cy - a.py) < Math.hypot(cx - b.px, cy - b.py) ? a : b
     );
-    const dist = Math.hypot(nearest.dx, nearest.dy);
+    const dist = Math.hypot(cx - nearest.px, cy - nearest.py);
+
+    const spring = { type: "spring", stiffness: 380, damping: 30 };
 
     if (dist < SNAP_THRESHOLD) {
-      // Snap to nearest corner and minimize
       let snapX, snapY;
-      const p = SNAP_PADDING;
+      if (nearest.name === "tl") { snapX = SNAP_PAD;                     snapY = SNAP_PAD; }
+      if (nearest.name === "tr") { snapX = vw - PILL_W - SNAP_PAD;       snapY = SNAP_PAD; }
+      if (nearest.name === "bl") { snapX = SNAP_PAD;                     snapY = vh - PILL_H - SNAP_PAD; }
+      if (nearest.name === "br") { snapX = vw - PILL_W - SNAP_PAD;       snapY = vh - PILL_H - SNAP_PAD; }
 
-      if (nearest.name === "tl") { snapX = p; snapY = p; }
-      else if (nearest.name === "tr") { snapX = vw - rect.width - p; snapY = p; }
-      else if (nearest.name === "bl") { snapX = p; snapY = vh - rect.height - p; }
-      else { snapX = vw - rect.width - p; snapY = vh - rect.height - p; }
-
-      // Convert to motion values (which are relative to initial fixed pos 0,0)
-      // The element starts at fixed bottom-left; x/y are offsets from that origin
-      // We need absolute page position: set x/y so element ends at snapX/snapY
-      const originLeft = 0;
-      const originTop = 0;
-      // current computed offset from origin:
-      // rect.left = originLeft + x.get(), rect.top = originTop + y.get()
-      const targetX = snapX;
-      const targetY = snapY;
-
-      animate(x, targetX, { type: "spring", stiffness: 400, damping: 32 });
-      animate(y, targetY, { type: "spring", stiffness: 400, damping: 32 });
       setIsMinimized(true);
+      animate(x, snapX, spring);
+      animate(y, snapY, spring);
     } else {
-      // Center area → expand to full card
+      // Expand to card, clamp in viewport
+      const clampedX = Math.max(SNAP_PAD, Math.min(vw - CARD_W - SNAP_PAD, ex));
+      const clampedY = Math.max(SNAP_PAD, Math.min(vh - CARD_H - SNAP_PAD, ey));
       setIsMinimized(false);
+      animate(x, clampedX, spring);
+      animate(y, clampedY, spring);
     }
   };
 
@@ -192,7 +179,9 @@ export function SpotifyPlayer() {
     <motion.div
       ref={containerRef}
       drag
-      dragMomentum={false}
+      dragMomentum={true}
+      dragElastic={0.1}
+      dragTransition={{ power: 0.2, timeConstant: 200 }}
       dragControls={dragControls}
       dragListener={false}
       style={{
@@ -218,19 +207,16 @@ export function SpotifyPlayer() {
       />
 
       {isMinimized ? (
-        /* Minimized Pill */
         <div
           className="spotify-pill-btn"
           onPointerDown={(e) => dragControls.start(e)}
-          title="Drag ke tengah untuk perluas, klik untuk expand"
+          title="Drag ke tengah untuk perluas"
         >
           <div className="spotify-pill-cover" onClick={() => setIsMinimized(false)}>
             <img src={currentTrack.coverSrc} alt={currentTrack.title} />
             {isPlaying && (
               <div className="spotify-pill-wave">
-                <span className="bar b1" />
-                <span className="bar b2" />
-                <span className="bar b3" />
+                <span className="bar b1" /><span className="bar b2" /><span className="bar b3" />
               </div>
             )}
           </div>
@@ -246,22 +232,16 @@ export function SpotifyPlayer() {
             title={isPlaying ? "Jeda" : "Putar"}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-              {isPlaying ? (
-                <path d="M6 4h4v16H6zm8 0h4v16h-4z" />
-              ) : (
-                <path d="M8 5v14l11-7z" />
-              )}
+              {isPlaying ? <path d="M6 4h4v16H6zm8 0h4v16h-4z" /> : <path d="M8 5v14l11-7z" />}
             </svg>
           </div>
         </div>
       ) : (
-        /* Full Card */
         <div className="spotify-card">
-          {/* Header / Drag Handle */}
           <div
             className="spotify-card-top"
             onPointerDown={(e) => dragControls.start(e)}
-            title="Tahan & drag ke pojok untuk minimize, tengah layar untuk full"
+            title="Drag ke pojok untuk minimize"
           >
             <div className="spotify-brand-badge">
               <span className="drag-handle-dots" aria-hidden="true">
@@ -273,19 +253,16 @@ export function SpotifyPlayer() {
               <span>Spotify Player</span>
             </div>
 
-            <div className="spotify-header-actions">
-              <button
-                type="button"
-                className="spotify-minimize-btn"
-                onClick={() => setIsMinimized(true)}
-                title="Minimize"
-                aria-label="Minimize"
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="spotify-minimize-btn"
+              onClick={() => setIsMinimized(true)}
+              aria-label="Minimize"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            </button>
           </div>
 
           <div className="spotify-main-content">
@@ -294,25 +271,19 @@ export function SpotifyPlayer() {
               {isPlaying && (
                 <div className="spotify-cover-overlay">
                   <div className="spotify-equalizer">
-                    <span className="eq eq1" />
-                    <span className="eq eq2" />
-                    <span className="eq eq3" />
-                    <span className="eq eq4" />
+                    <span className="eq eq1" /><span className="eq eq2" />
+                    <span className="eq eq3" /><span className="eq eq4" />
                   </div>
                 </div>
               )}
             </div>
-
             <div className="spotify-track-meta">
               <h4 className="spotify-track-title">{currentTrack.title}</h4>
               <p className="spotify-track-artist">{currentTrack.artist}</p>
-              <span className="spotify-track-count">
-                {currentIdx + 1} of {PLAYLIST.length}
-              </span>
+              <span className="spotify-track-count">{currentIdx + 1} of {PLAYLIST.length}</span>
             </div>
           </div>
 
-          {/* Progress */}
           <div className="spotify-progress-wrap">
             <input
               type="range"
@@ -332,32 +303,20 @@ export function SpotifyPlayer() {
             </div>
           </div>
 
-          {/* Controls */}
           <div className="spotify-controls">
             <button type="button" className="ctrl-btn prev" onClick={handlePrev} aria-label="Previous">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" /></svg>
             </button>
-
             <button type="button" className="ctrl-btn play-pause" onClick={togglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                {isPlaying ? (
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                ) : (
-                  <path d="M8 5v14l11-7z" />
-                )}
+                {isPlaying ? <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /> : <path d="M8 5v14l11-7z" />}
               </svg>
             </button>
-
             <button type="button" className="ctrl-btn next" onClick={handleNext} aria-label="Next">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" /></svg>
             </button>
           </div>
 
-          {/* Corner Resize Grip */}
           <div
             className="spotify-resize-handle"
             onPointerDown={handleResizeStart}
