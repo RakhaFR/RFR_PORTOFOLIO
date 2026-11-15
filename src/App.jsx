@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import * as THREE from "three";
 import { DirectionAwareSelection } from "./components/DirectionAwareSelection";
 import { HoverImageLinks } from "./components/HoverImageLinks";
+import { StackingSkillCards } from "./components/StackingSkillCards";
 import "../style.css";
 import "./animations.css";
 
@@ -704,22 +705,6 @@ export default function App() {
     }
   };
 
-  // Skill Journey Click / Trigger Visual Effect
-  const triggerCardShock = (index) => {
-    const card = document.querySelectorAll(".journey-stack-card")[index];
-    if (!card) return;
-    const flash = card.querySelector(".journey-flash-layer");
-    const splash = card.querySelector(".journey-splash-ring");
-    if (flash) gsap.fromTo(flash, { opacity: 0.7 }, { opacity: 0, duration: 0.5, ease: "power2.out" });
-    if (splash) {
-      gsap.fromTo(
-        splash,
-        { scale: 0.2, opacity: 0.95 },
-        { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }
-      );
-    }
-  };
-
   // ═══════════════════════════════════════════════════════════════
   // GSAP 60FPS MASTER TIMELINES & SCROLLTRIGGERS
   // ═══════════════════════════════════════════════════════════════
@@ -965,70 +950,18 @@ export default function App() {
           "-=0.3"
         );
 
-      // ── 7. Skills Vertical Stacking Cards & Scroll Trigger ───
+      // ── 7. Skills Roadmap Section Entrance ──────────────────
       const skillTl = gsap.timeline({
         scrollTrigger: {
           trigger: "#skill",
-          start: "top 75%",
+          start: "top 85%",
+          fastScrollEnd: true,
           toggleActions: "play none none none",
         },
       });
       skillTl
-        .from("#skill .section-pill", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#skill .heading", { y: 50, opacity: 0, rotationX: -15, duration: 0.9, ease: "power4.out" }, "-=0.4");
-
-      const stackCards = gsap.utils.toArray(".journey-stack-card");
-
-      stackCards.forEach((card, index) => {
-        const flash = card.querySelector(".journey-flash-layer");
-        const splash = card.querySelector(".journey-splash-ring");
-        const fills = card.querySelectorAll(".tile-bar-fill");
-
-        // Animate progress bars once when card first appears in viewport
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 85%",
-          once: true,
-          onEnter: () => {
-            fills.forEach((fill) => {
-              const targetW = fill.getAttribute("data-percent") || "0%";
-              gsap.fromTo(fill, { width: "0%" }, { width: targetW, duration: 1.2, ease: "power3.out" });
-            });
-          },
-        });
-
-        // Trigger visual impact (flash + splash shockwave) when card reaches its sticky position
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 115px",
-          onEnter: () => {
-            if (flash) gsap.fromTo(flash, { opacity: 0.7 }, { opacity: 0, duration: 0.5, ease: "power2.out" });
-            if (splash) {
-              gsap.fromTo(
-                splash,
-                { scale: 0.2, opacity: 0.95 },
-                { scale: 2.2, opacity: 0, duration: 0.6, ease: "power2.out" }
-              );
-            }
-          },
-        });
-
-        // Smooth depth transition: as the next card arrives, smoothly dim & slightly scale down the previous card
-        if (index < stackCards.length - 1) {
-          const nextCard = stackCards[index + 1];
-          gsap.to(card, {
-            scale: 0.95,
-            filter: "brightness(0.65)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: nextCard,
-              start: "top 60%",
-              end: "top 100px",
-              scrub: true,
-            },
-          });
-        }
-      });
+        .from("#skill .section-pill", { y: 20, opacity: 0, duration: 0.35, ease: "power3.out" })
+        .from("#skill .heading", { y: 30, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.25");
 
       // ── 8. Certificates / Slider Entrance ───────────────────
       const sliderTl = gsap.timeline({
@@ -1471,63 +1404,7 @@ export default function App() {
           Technical <span>Journey</span>
         </h2>
 
-        <div className="journey-stack-wrapper">
-          {JOURNEY_STAGES.map((stage, stageIdx) => (
-            <div
-              key={stage.step}
-              className="journey-stack-card"
-              style={{
-                zIndex: stageIdx + 1,
-              }}
-              onClick={() => triggerCardShock(stageIdx)}
-            >
-              <div className="journey-card-fx" aria-hidden="true">
-                <div className="journey-splash-ring" />
-                <div className="journey-flash-layer" />
-              </div>
-
-              <div className="journey-card-top-bar">
-                <span className="journey-phase-badge">{stage.phase}</span>
-                <span className="journey-card-step-num">STEP {stage.step}</span>
-              </div>
-
-              <div className="journey-card-meta">
-                <h3 className="journey-card-title">{stage.title}</h3>
-                <p className="journey-card-summary">{stage.summary}</p>
-              </div>
-
-              <div className="journey-skills-tile-grid">
-                {stage.skills.map((skill) => (
-                  <div key={skill.id} className="journey-skill-tile">
-                    <div className="tile-header">
-                      <div className="tile-icon-box">
-                        <img src={skill.icon} alt={skill.name} />
-                      </div>
-                      <span className="tile-status-tag">{skill.level}</span>
-                    </div>
-
-                    <h4 className="tile-title">{skill.name}</h4>
-                    <p className="tile-desc">{skill.desc}</p>
-
-                    <div className="tile-meter-wrap">
-                      <div className="tile-meter-labels">
-                        <span className="tile-progress-lbl">Mastery Level</span>
-                        <span className="tile-percent-val">{skill.percent}</span>
-                      </div>
-                      <div className="tile-bar-track">
-                        <div
-                          className="tile-bar-fill"
-                          data-percent={skill.percent}
-                          style={{ width: skill.percent }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <StackingSkillCards stages={JOURNEY_STAGES} />
       </section>
 
       {/* ── Certificate ────────────────────────────── */}
