@@ -365,28 +365,28 @@ const PORTFOLIO_PROJECTS = [
 
 const CERTIFICATES = [
   {
-    title: "Sertifikat Digiup 2025 (Halaman 1)",
+    id: "digiup",
+    title: "Sertifikat Digiup 2025",
     meta: "Telkom Indonesia · 2025",
     desc: "Sertifikat kelulusan program Digiup 2025 dari Telkom Indonesia dalam fase pembekalan junior web developer.",
-    img: "/img/Sertfikat/Sertifikat_digiup_page-0001.jpg",
+    images: [
+      "/img/Sertfikat/Sertifikat_digiup_page-0001.jpg",
+      "/img/Sertfikat/Sertifikat_digiup_page-0002.jpg",
+    ],
   },
   {
-    title: "Sertifikat Digiup 2025 (Halaman 2)",
-    meta: "Telkom Indonesia · 2025",
-    desc: "Transkrip kompetensi dan capaian materi teknis pengembangan web terstruktur program Digiup Telkom Indonesia.",
-    img: "/img/Sertfikat/Sertifikat_digiup_page-0002.jpg",
-  },
-  {
+    id: "google",
     title: "Sertifikat Google",
     meta: "Google · Credential",
     desc: "Sertifikasi resmi Google atas penyelesaian modul dan kompetensi digital dasar berstandar industri.",
-    img: "/img/Sertfikat/sertifikat_google.png",
+    images: ["/img/Sertfikat/sertifikat_google.png"],
   },
   {
+    id: "oscar",
     title: "Sertifikat Lomba OSCAR 3.0",
     meta: "OSCAR 3.0 · Competition",
     desc: "Penghargaan partisipasi dan pencapaian dalam kompetisi teknologi OSCAR 3.0 tingkat pelajar/umum.",
-    img: "/img/Sertfikat/sertifika_lomba _oscar_3.0.png",
+    images: ["/img/Sertfikat/sertifika_lomba _oscar_3.0.png"],
   },
 ];
 
@@ -397,6 +397,10 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("home-content");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedCert, setSelectedCert] = useState(null);
+  const [activeCertImgIdx, setActiveCertImgIdx] = useState(0);
+  const certModalRef = useRef(null);
+  const certBackdropRef = useRef(null);
 
   // Firebase Chat States
   const [currentUser, setCurrentUser] = useState(null);
@@ -601,6 +605,64 @@ export default function App() {
       alert("Gagal mengirim pesan.");
     }
   };
+
+  const openCertModal = (cert, imgIdx = 0) => {
+    setSelectedCert(cert);
+    setActiveCertImgIdx(imgIdx);
+  };
+
+  const closeCertModal = () => {
+    if (!certModalRef.current || !certBackdropRef.current) {
+      setSelectedCert(null);
+      return;
+    }
+    gsap.timeline({
+      onComplete: () => {
+        setSelectedCert(null);
+      },
+    })
+      .to(certModalRef.current, {
+        scaleX: 1.15,
+        scaleY: 0.85,
+        duration: 0.12,
+        ease: "power2.in",
+      })
+      .to(certModalRef.current, {
+        scale: 0.5,
+        opacity: 0,
+        y: 60,
+        duration: 0.28,
+        ease: "back.in(1.8)",
+      }, "+=0.02")
+      .to(certBackdropRef.current, {
+        opacity: 0,
+        duration: 0.25,
+        ease: "power2.out",
+      }, "<");
+  };
+
+  useEffect(() => {
+    if (selectedCert && certModalRef.current && certBackdropRef.current) {
+      gsap.fromTo(
+        certBackdropRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: "power2.out" }
+      );
+      gsap.fromTo(
+        certModalRef.current,
+        { scale: 0.3, scaleX: 0.8, scaleY: 1.25, opacity: 0, y: 70 },
+        {
+          scale: 1,
+          scaleX: 1,
+          scaleY: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          ease: "elastic.out(1.15, 0.65)",
+        }
+      );
+    }
+  }, [selectedCert]);
 
   // ═══════════════════════════════════════════════════════════════
   // GSAP 60FPS MASTER TIMELINES & SCROLLTRIGGERS
@@ -1308,26 +1370,136 @@ export default function App() {
           My <span>Credentials</span>
         </h2>
         <div className="cv-medal">
-          {CERTIFICATES.map((cert, index) => (
-            <InteractiveTiltCard key={index} className={`box-medal${index + 1}`}>
-              <div className="medal-icon">
-                <span className="material-symbols-outlined" style={{ color: "#111", fontSize: "40px" }}>
-                  workspace_premium
-                </span>
-              </div>
-              <div className="medal-meta">{cert.meta}</div>
-              <div className="img-medal">
-                <img src={cert.img} alt={cert.title} loading="lazy" />
-              </div>
-              <div className="medal-h2">
-                <h2>{cert.title}</h2>
-              </div>
-              <div className="medal-p">
-                <p>{cert.desc}</p>
-              </div>
-            </InteractiveTiltCard>
-          ))}
+          {CERTIFICATES.map((cert, index) => {
+            const isMultiPage = cert.images.length > 1;
+            return (
+              <InteractiveTiltCard
+                key={cert.id}
+                className={`box-medal${index + 1} cert-interactive-card`}
+                onClick={() => openCertModal(cert, 0)}
+              >
+                <div className="cert-card-header">
+                  <div className="medal-icon">
+                    <span className="material-symbols-outlined" style={{ color: "#111", fontSize: "36px" }}>
+                      workspace_premium
+                    </span>
+                  </div>
+                  <div className="medal-meta-group">
+                    <span className="medal-meta">{cert.meta}</span>
+                    {isMultiPage && <span className="cert-page-pill">2 Pages Stack</span>}
+                  </div>
+                </div>
+
+                {/* Certificate Visual with Stack effect if multi-page */}
+                <div className="cert-visual-wrapper">
+                  {isMultiPage ? (
+                    <div className="cert-stack-deck">
+                      {/* Back card layer (page 2) */}
+                      <div className="cert-stack-layer back-layer" aria-hidden="true">
+                        <img src={cert.images[1]} alt="" />
+                      </div>
+                      {/* Front card layer (page 1) */}
+                      <div className="cert-stack-layer front-layer">
+                        <img src={cert.images[0]} alt={cert.title} loading="lazy" />
+                        <div className="cert-hover-pill">
+                          <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>visibility</span>
+                          <span>Buka Preview</span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="img-medal cert-single-frame">
+                      <img src={cert.images[0]} alt={cert.title} loading="lazy" />
+                      <div className="cert-hover-pill">
+                        <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>visibility</span>
+                        <span>Buka Preview</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="cert-info-group">
+                  <div className="medal-h2">
+                    <h2>{cert.title}</h2>
+                  </div>
+                  <div className="medal-p">
+                    <p>{cert.desc}</p>
+                  </div>
+                </div>
+
+                <div className="cert-card-footer">
+                  <span className="cert-action-hint">Klik untuk perbesar</span>
+                  <div className="cert-action-arrow">↗</div>
+                </div>
+              </InteractiveTiltCard>
+            );
+          })}
         </div>
+
+        {/* ── GSAP Rubber-Band Stretch Modal ─────────── */}
+        {selectedCert && (
+          <div
+            className="cert-modal-overlay"
+            ref={certBackdropRef}
+            onClick={closeCertModal}
+          >
+            <div
+              className="cert-modal-dialog"
+              ref={certModalRef}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="cert-modal-top">
+                <div className="cert-modal-title-box">
+                  <span className="cert-modal-badge">{selectedCert.meta}</span>
+                  <h3>{selectedCert.title}</h3>
+                </div>
+                <button
+                  type="button"
+                  className="cert-modal-close-btn"
+                  onClick={closeCertModal}
+                  aria-label="Tutup Modal"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Page switcher tabs if multi-page */}
+              {selectedCert.images.length > 1 && (
+                <div className="cert-modal-tabs">
+                  {selectedCert.images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`cert-tab-btn ${activeCertImgIdx === idx ? "active" : ""}`}
+                      onClick={() => setActiveCertImgIdx(idx)}
+                    >
+                      Halaman {idx + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <div className="cert-modal-image-display">
+                <img
+                  src={selectedCert.images[activeCertImgIdx]}
+                  alt={`${selectedCert.title} - Halaman ${activeCertImgIdx + 1}`}
+                />
+              </div>
+
+              <div className="cert-modal-footer">
+                <p>{selectedCert.desc}</p>
+                <a
+                  href={selectedCert.images[activeCertImgIdx]}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="cert-modal-download-link"
+                >
+                  Buka Gambar Penuh ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ── Portfolio (Aceternity Hover Image Links) ─────── */}
