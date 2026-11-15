@@ -363,6 +363,33 @@ const PORTFOLIO_PROJECTS = [
   },
 ];
 
+const CERTIFICATES = [
+  {
+    title: "Sertifikat Digiup 2025 (Halaman 1)",
+    meta: "Telkom Indonesia · 2025",
+    desc: "Sertifikat kelulusan program Digiup 2025 dari Telkom Indonesia dalam fase pembekalan junior web developer.",
+    img: "/img/Sertfikat/Sertifikat_digiup_page-0001.jpg",
+  },
+  {
+    title: "Sertifikat Digiup 2025 (Halaman 2)",
+    meta: "Telkom Indonesia · 2025",
+    desc: "Transkrip kompetensi dan capaian materi teknis pengembangan web terstruktur program Digiup Telkom Indonesia.",
+    img: "/img/Sertfikat/Sertifikat_digiup_page-0002.jpg",
+  },
+  {
+    title: "Sertifikat Google",
+    meta: "Google · Credential",
+    desc: "Sertifikasi resmi Google atas penyelesaian modul dan kompetensi digital dasar berstandar industri.",
+    img: "/img/Sertfikat/sertifikat_google.png",
+  },
+  {
+    title: "Sertifikat Lomba OSCAR 3.0",
+    meta: "OSCAR 3.0 · Competition",
+    desc: "Penghargaan partisipasi dan pencapaian dalam kompetisi teknologi OSCAR 3.0 tingkat pelajar/umum.",
+    img: "/img/Sertfikat/sertifika_lomba _oscar_3.0.png",
+  },
+];
+
 export default function App() {
   const shouldReduce = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
@@ -1281,26 +1308,25 @@ export default function App() {
           My <span>Credentials</span>
         </h2>
         <div className="cv-medal">
-          <InteractiveTiltCard className="box-medal1">
-            <div className="medal-icon">
-              <span className="material-symbols-outlined" style={{ color: "#111", fontSize: "40px" }}>
-                workspace_premium
-              </span>
-            </div>
-            <div className="medal-meta">Telkom Indonesia · 2025</div>
-            <div className="img-medal">
-              <img src="/img/Sertifikat Digiup 2025/Sertifikat_digiup_page-0001.jpg" alt="Sertifikat Digiup 2025" />
-            </div>
-            <div className="medal-h2">
-              <h2>Sertifikat Digiup 2025</h2>
-            </div>
-            <div className="medal-p">
-              <p>
-                Ini adalah Sertifikat pertamaku dalam fase menjadi junior developer. Aku sangat senang karena ini adalah
-                sertifikat dari Telkom Indonesia.
-              </p>
-            </div>
-          </InteractiveTiltCard>
+          {CERTIFICATES.map((cert, index) => (
+            <InteractiveTiltCard key={index} className={`box-medal${index + 1}`}>
+              <div className="medal-icon">
+                <span className="material-symbols-outlined" style={{ color: "#111", fontSize: "40px" }}>
+                  workspace_premium
+                </span>
+              </div>
+              <div className="medal-meta">{cert.meta}</div>
+              <div className="img-medal">
+                <img src={cert.img} alt={cert.title} loading="lazy" />
+              </div>
+              <div className="medal-h2">
+                <h2>{cert.title}</h2>
+              </div>
+              <div className="medal-p">
+                <p>{cert.desc}</p>
+              </div>
+            </InteractiveTiltCard>
+          ))}
         </div>
       </section>
 
