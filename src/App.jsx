@@ -4,6 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import * as THREE from "three";
+import { DirectionAwareSelection } from "./components/DirectionAwareSelection";
+import { HoverImageLinks } from "./components/HoverImageLinks";
 import "../style.css";
 import "./animations.css";
 
@@ -277,6 +279,86 @@ const JOURNEY_STAGES = [
         desc: "Framework Node.js minimalis untuk microservices & REST API.",
       },
     ],
+  },
+];
+
+const PORTFOLIO_PROJECTS = [
+  {
+    title: "Plenger RnG",
+    tag: "Game",
+    desc: "Permainan gacha visual simpel untuk mendapatkan muka-muka lucu dan kocak dengan rarity berbeda.",
+    href: "https://plenger-rng.vercel.app/",
+    img: "/img/projek/PlengerRng.jpg",
+  },
+  {
+    title: "Reflex Rhythm",
+    tag: "Game",
+    desc: "Permainan yang menguji kecepatan dan ketepatan refleks jari Anda dengan tantangan beat.",
+    href: "https://reflex-rhythm.vercel.app/",
+    img: "/img/projek/ReflexGame.png",
+  },
+  {
+    title: "The Survey",
+    tag: "Visual Novel Game",
+    desc: "Visual novel psikologis yang menceritakan perjuangan seseorang keluar dari isolasi diri.",
+    href: "https://rakhafr.github.io/TheSurvey/",
+    img: "/img/projek/TheSurvey.png",
+  },
+  {
+    title: "Bootstrap Template Hub",
+    tag: "UI Library",
+    desc: "Kumpulan komponen Bootstrap 5.3 lengkap, siap pakai, modern, dan 100% offline.",
+    href: "https://rakhafr.github.io/Boostrap-template-class/",
+    img: "/img/projek/boostrap-template-class.png",
+  },
+  {
+    title: "SkyCast",
+    tag: "Weather Dashboard",
+    desc: "Platform pemantau cuaca cerdas menyajikan suhu real-time, kelembapan, dan kualitas udara.",
+    href: "https://sky-cast-iota-lime.vercel.app/",
+    img: "/img/projek/skyCast.png",
+  },
+  {
+    title: "TheotownHub",
+    tag: "Community Hub",
+    desc: "Pusat info plugin TheoTown terbaru, creator certified, showcase kota, dan update mingguan.",
+    href: "https://theotownhub.vercel.app/",
+    img: "/img/projek/theotownHub.png",
+  },
+  {
+    title: "Me Anim",
+    tag: "Platform",
+    desc: "Platform UI modern yang mengonsumsi scraping API untuk katalog streaming anime visual.",
+    href: "https://me-anim.vercel.app/",
+    img: "/img/projek/me-anim.png",
+  },
+  {
+    title: "Me Anim API Explorer",
+    tag: "Public REST API",
+    desc: "REST API Express + TypeScript scraping 4 sumber anime Indonesia dengan dokumentasi interaktif.",
+    href: "https://me-anim-api-explorer.vercel.app/",
+    img: "/img/projek/me-anim-api-explorer.png",
+  },
+  {
+    title: "Powernet",
+    tag: "Web App",
+    desc: "System integrator and IT enterprise solution provider terkemuka di Indonesia.",
+    href: "https://powernet.co.id/",
+    img: "/img/projek/Powernet.png",
+  },
+  {
+    title: "EduWave",
+    tag: "E-Learning",
+    desc: "Platform edukasi digital modern dan interaktif untuk kegiatan belajar siswa SMP dan SMA.",
+    href: "https://edu-waveid.vercel.app/",
+    img: "/img/projek/eduwave.png",
+  },
+  {
+    title: "SaveAja",
+    tag: "Media Downloader",
+    desc: "Unduh video TikTok tanpa watermark, Instagram Reels, dan YouTube audio/video instan.",
+    href: "https://save-aja.vercel.app/",
+    img: "/img/projek/saveaja.png",
   },
 ];
 
@@ -801,43 +883,38 @@ export default function App() {
       const aboutTl = gsap.timeline({
         scrollTrigger: {
           trigger: "#about",
-          start: "top 75%",
+          start: "top 85%",
+          fastScrollEnd: true,
           toggleActions: "play none none none",
         },
       });
       aboutTl
-        .from("#about .section-pill", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#about .sub-main h2", { y: 50, opacity: 0, duration: 0.8, ease: "power4.out" }, "-=0.4")
-        .from("#about .text-box p", { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.5")
+        .from("#about .section-pill", { y: 20, opacity: 0, duration: 0.35, ease: "power3.out" })
+        .from("#about .sub-main h2", { y: 35, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.25")
+        .from("#about .text-float", { y: 25, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.3")
         .from(
           "#about .stat-item",
           {
-            y: 40,
+            y: 20,
             opacity: 0,
-            scale: 0.85,
-            stagger: 0.12,
-            duration: 0.7,
-            ease: "back.out(1.7)",
+            scale: 0.9,
+            stagger: 0.06,
+            duration: 0.4,
+            ease: "back.out(1.5)",
           },
-          "-=0.4"
+          "-=0.25"
         )
         .fromTo(
           "#about .about-img-item",
-          { opacity: 0, y: 70, scale: 0.88, rotationY: 8 },
-          { opacity: 1, y: 0, scale: 1, rotationY: 0, stagger: 0.2, duration: 1.0, ease: "power3.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          "#about .about-img-item img",
-          { scale: 1.25, filter: "brightness(0.65)" },
-          { scale: 1, filter: "brightness(1)", stagger: 0.2, duration: 1.2, ease: "power3.out" },
-          "<"
+          { opacity: 0, y: 35, scale: 0.94 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.08, duration: 0.5, ease: "power3.out" },
+          "-=0.3"
         )
         .fromTo(
           "#about .about-photo-badge",
-          { opacity: 0, y: 20, scale: 0.8 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.15, duration: 0.6, ease: "back.out(1.7)" },
-          "-=0.4"
+          { opacity: 0, y: 15, scale: 0.85 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.06, duration: 0.35, ease: "back.out(1.7)" },
+          "-=0.2"
         );
 
       // Smooth Scroll Parallax between the two About photos
@@ -866,25 +943,26 @@ export default function App() {
       const galleryTl = gsap.timeline({
         scrollTrigger: {
           trigger: "#gallery",
-          start: "top 75%",
+          start: "top 85%",
+          fastScrollEnd: true,
           toggleActions: "play none none none",
         },
       });
       galleryTl
-        .from("#gallery .section-pill", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#gallery .heading", { y: 50, opacity: 0, rotationX: -15, duration: 0.9, ease: "power4.out" }, "-=0.4")
-        .from("#gallery .gallery-container", { y: 50, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.4")
+        .from("#gallery .section-pill", { y: 20, opacity: 0, duration: 0.35, ease: "power3.out" })
+        .from("#gallery .heading", { y: 30, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.25")
+        .from("#gallery .gallery-container", { y: 30, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.25")
         .fromTo(
           "#gallery .gallery-preview img",
-          { scale: 1.1, clipPath: "inset(0 100% 0 0)" },
-          { scale: 1, clipPath: "inset(0 0% 0 0)", duration: 1.1, ease: "power3.out" },
-          "-=0.6"
+          { opacity: 0, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" },
+          "-=0.3"
         )
         .fromTo(
           "#gallery .thumb",
-          { opacity: 0, y: 30, scale: 0.92 },
-          { opacity: 1, y: 0, scale: 1, stagger: 0.05, duration: 0.7, ease: "power3.out" },
-          "-=0.5"
+          { opacity: 0, y: 20, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.03, duration: 0.4, ease: "power3.out" },
+          "-=0.3"
         );
 
       // ── 7. Skills Vertical Stacking Cards & Scroll Trigger ───
@@ -974,18 +1052,19 @@ export default function App() {
       const projekTl = gsap.timeline({
         scrollTrigger: {
           trigger: "#projek",
-          start: "top 75%",
+          start: "top 85%",
+          fastScrollEnd: true,
           toggleActions: "play none none none",
         },
       });
       projekTl
-        .from("#projek .section-pill", { y: 30, opacity: 0, duration: 0.6, ease: "power3.out" })
-        .from("#projek .heading", { y: 50, opacity: 0, rotationX: -15, duration: 0.9, ease: "power4.out" }, "-=0.4")
+        .from("#projek .section-pill", { y: 20, opacity: 0, duration: 0.35, ease: "power3.out" })
+        .from("#projek .heading", { y: 30, opacity: 0, duration: 0.45, ease: "power3.out" }, "-=0.25")
         .fromTo(
-          "#projek .card",
-          { opacity: 0, y: 60, rotationX: 18, scale: 0.92 },
-          { opacity: 1, y: 0, rotationX: 0, scale: 1, stagger: 0.1, duration: 0.9, ease: "power3.out" },
-          "-=0.5"
+          "#projek .hover-link-item",
+          { opacity: 0, y: 25 },
+          { opacity: 1, y: 0, stagger: 0.04, duration: 0.45, ease: "power3.out" },
+          "-=0.2"
         );
 
       // ── 10. Chat Room Entrance ──────────────────────────────
@@ -1232,11 +1311,7 @@ export default function App() {
             </div>
             <div className="text-float">
               <div className="text-box">
-                <p>
-                  My name is Rakha Fadilah Riyadi. I'm a front-end web developer from Bogor, West Java, with three year of
-                  hands-on experience. In my opinion, building software is not just a job — it's an art form with aesthetic
-                  value. My goal is to craft websites that are functional, user-friendly, and visually memorable.
-                </p>
+                <DirectionAwareSelection />
               </div>
             </div>
             <div className="about-stats">
@@ -1485,41 +1560,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Portfolio (Staggered 3D Tilt Cards) ─────── */}
+      {/* ── Portfolio (Aceternity Hover Image Links) ─────── */}
       <section className="projek full" id="projek">
         <span className="section-pill dark">Portfolio</span>
         <h2 className="heading dark-heading">
           Selected <em>projects</em>
         </h2>
-        <div className="cv-blog">
-          {[
-            { title: "Plenger RnG", tag: "Game", desc: "Sebuah permainan gacha simpel untuk mendapatkan muka-muka lucu dan kocak dengan rarity berbeda.", href: "https://plenger-rng.vercel.app/", img: "/img/projek/PlengerRng.jpg" },
-            { title: "Reflex Rhythm", tag: "Game", desc: "Permainan yang menguji kecepatan dan ketepatan tangan Anda dengan tantangan reflex.", href: "https://reflex-rhythm.vercel.app/", img: "/img/projek/ReflexGame.png" },
-            { title: "The Survey", tag: "Visual Novel Game", desc: "Visual novel yang menceritakan seorang yang berjuang keluar dari isolasi diri.", href: "https://rakhafr.github.io/TheSurvey/", img: "/img/projek/TheSurvey.png" },
-            { title: "Bootstrap Template Hub", tag: "UI Library", desc: "Kumpulan komponen Bootstrap 5.3 lengkap, siap pakai, 100% offline.", href: "https://rakhafr.github.io/Boostrap-template-class/", img: "/img/projek/boostrap-template-class.png" },
-            { title: "SkyCast", tag: "Weather Dashboard", desc: "Platform pemantau cuaca cerdas menyajikan suhu, kelembapan, dan kualitas udara.", href: "https://sky-cast-iota-lime.vercel.app/", img: "/img/projek/skyCast.png" },
-            { title: "TheotownHub", tag: "Community Hub", desc: "Pusat info plugin TheoTown terbaru, creator certified, dan update mingguan.", href: "https://theotownhub.vercel.app/", img: "/img/projek/theotownHub.png" },
-            { title: "Me Anim", tag: "Platform", desc: "Platform UI modern yang mengonsumsi scraping API untuk katalog anime visual.", href: "https://me-anim.vercel.app/", img: "/img/projek/me-anim.png" },
-            { title: "Me Anim API Explorer", tag: "Public REST API", desc: "REST API Express + TypeScript scraping 4 sumber anime Indonesia.", href: "https://me-anim-api-explorer.vercel.app/", img: "/img/projek/me-anim-api-explorer.png" },
-            { title: "Powernet", tag: "Web App", desc: "System integrator and IT enterprise solution provider di Indonesia.", href: "https://powernet.co.id/", img: "/img/projek/Powernet.png" },
-            { title: "EduWave", tag: "E-Learning", desc: "Platform edukasi digital modern dan interaktif untuk siswa SMP dan SMA.", href: "https://edu-waveid.vercel.app/", img: "/img/projek/eduwave.png" },
-            { title: "SaveAja", tag: "Media Downloader", desc: "Unduh video TikTok tanpa watermark, Instagram Reels, dan YouTube instan.", href: "https://save-aja.vercel.app/", img: "/img/projek/saveaja.png" },
-          ].map((project, index) => (
-            <InteractiveTiltCard key={index} className="card">
-              <div className="image">
-                <img src={project.img} alt={project.title} />
-                <span className="card-tag">{project.tag}</span>
-              </div>
-              <div className="content">
-                <h2>{project.title}</h2>
-                <p>{project.desc}</p>
-                <a href={project.href} target="_blank" rel="noreferrer" className="btn">
-                  Visit site →
-                </a>
-              </div>
-            </InteractiveTiltCard>
-          ))}
-        </div>
+        <HoverImageLinks projects={PORTFOLIO_PROJECTS} />
       </section>
 
       {/* ── Chat Room ──────────────────────────────── */}

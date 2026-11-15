@@ -632,6 +632,324 @@
   }
 }
 
+/* ─── Aceternity Direction Aware Selection (About Copy) ─────── */
+.direction-selection-container {
+  position: relative;
+  width: 100%;
+}
+
+.about-interactive-copy {
+  font-size: 1.55rem;
+  color: var(--b60, #4b5563);
+  line-height: 1.85;
+  user-select: text;
+}
+
+.selection-token {
+  position: relative;
+  display: inline-block;
+  color: var(--black, #0f172a);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.selection-token:hover {
+  color: #000;
+}
+
+.selection-bounding-frame {
+  box-sizing: border-box;
+}
+
+.resize-handle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border: 1.5px solid #BAFF4F;
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.resize-handle.top-left {
+  top: -4px;
+  left: -4px;
+}
+.resize-handle.top-right {
+  top: -4px;
+  right: -4px;
+}
+.resize-handle.bottom-left {
+  bottom: -4px;
+  left: -4px;
+}
+.resize-handle.bottom-right {
+  bottom: -4px;
+  right: -4px;
+}
+
+.selection-meta-tag {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #111411;
+  color: #BAFF4F;
+  font-family: var(--mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(186, 255, 79, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.meta-tag-pill {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.95rem;
+}
+
+/* ─── Aceternity Hover Image Links (Projects) ───────────────── */
+.hover-image-links-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 3.5rem auto 0;
+}
+
+.floating-hover-image-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -160px;
+  z-index: 40;
+  pointer-events: none;
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.45));
+}
+
+.floating-image-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(186, 255, 79, 0.6);
+  background: #111411;
+  box-shadow: 0 0 30px rgba(186, 255, 79, 0.25);
+}
+
+.floating-image-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.floating-image-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.floating-image-caption .caption-tag {
+  color: var(--lime);
+}
+
+.floating-image-caption .caption-hint {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.hover-links-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.hover-link-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 1.6rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.hover-link-item.dimmed {
+  opacity: 0.3;
+}
+
+.hover-link-item:hover,
+.hover-link-item.active {
+  background: rgba(186, 255, 79, 0.08);
+  padding-left: 2.4rem;
+}
+
+.link-item-left {
+  display: flex;
+  align-items: baseline;
+  gap: 2.4rem;
+  flex: 1;
+}
+
+.link-index {
+  font-family: var(--mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.1em;
+}
+
+.link-item-left .link-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.link-heading {
+  font-family: var(--sans);
+  font-size: clamp(2.2rem, 3.4vw, 3.8rem);
+  font-weight: 800;
+  color: #111411;
+  line-height: 1.1;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.hover-link-item:hover .link-heading {
+  color: #000;
+  transform: translateX(4px);
+}
+
+.link-desc {
+  font-size: 1.35rem;
+  color: #4b5563;
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.link-item-right {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.link-tag-pill {
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #111411;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.5rem 1.4rem;
+  border-radius: 99px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.hover-link-item:hover .link-tag-pill {
+  background: #BAFF4F;
+  color: #111411;
+  border-color: #BAFF4F;
+}
+
+.link-arrow-circle {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.link-arrow-circle span {
+  font-size: 2.2rem;
+  color: #111411;
+  transition: transform 0.3s ease;
+}
+
+.hover-link-item:hover .link-arrow-circle {
+  background: #111411;
+  border-color: #111411;
+  transform: scale(1.08);
+}
+
+.hover-link-item:hover .link-arrow-circle span {
+  color: #BAFF4F;
+  transform: translate(2px, -2px) rotate(-45deg);
+}
+
+.mobile-thumb-preview {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .floating-hover-image-box {
+    display: none !important;
+  }
+  .hover-link-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+    padding: 2rem 1rem;
+  }
+  .hover-link-item:hover {
+    padding-left: 1rem;
+  }
+  .link-item-left {
+    gap: 1.4rem;
+  }
+  .link-item-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .mobile-thumb-preview {
+    display: block;
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.8rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .mobile-thumb-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 /* ─── Reduced Motion ─────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .mouse-follower-glow,
