@@ -7,6 +7,7 @@ import { DirectionAwareSelection } from "./components/DirectionAwareSelection";
 import { HoverImageLinks } from "./components/HoverImageLinks";
 import { StackingSkillCards } from "./components/StackingSkillCards";
 import { Galaxy } from "./components/Galaxy";
+import { SpotifyPlayer } from "./components/SpotifyPlayer";
 import "../style.css";
 import "./animations.css";
 
@@ -1766,6 +1767,9 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* ── Spotify Floating Mini Player ────────────── */}
+      <SpotifyPlayer />
     </div>
   );
 }
