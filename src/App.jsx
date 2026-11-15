@@ -1669,17 +1669,101 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Footer ─────────────────────────────────── */}
+      {/* ── Footer (React Bits Pro Footer-9) ───────── */}
       <footer>
-        <div className="footer">
-          <a href="#home-content" className="footer-logo">
-            Rakha<span>.</span>
-          </a>
-          <p>© 2026 Rakha Fadilah Riyadi — All Rights Reserved</p>
-          <div className="footer-links">
-            <a href="https://github.com/RakhaFR/" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.instagram.com/bang_r1yad1/" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://wa.me/6282111762085" target="_blank" rel="noreferrer">WhatsApp</a>
+        <div className="footer-pro-wrap">
+          {/* Top Grid: Info, Navigation, Highlights, Social */}
+          <div className="footer-top-grid">
+            <div className="footer-brand-col">
+              <a href="#home-content" className="brand-title">
+                Rakha<span>.</span>
+              </a>
+              <p className="brand-bio">
+                Front-end developer & creative coder from Bogor. Crafting aesthetic, accessible, and fast web experiences.
+              </p>
+              <div className="footer-live-status">
+                <span className="live-pulse-dot" />
+                <span>AVAILABLE FOR WORK · 2026</span>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <span className="footer-col-header">NAVIGATION</span>
+              <div className="footer-link-list">
+                <a href="#about">About Me</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#skill">
+                  Roadmap <span className="footer-badge-pill">NEW</span>
+                </a>
+                <a href="#slider">Credentials</a>
+                <a href="#projek">Selected Works</a>
+                <a href="#chat">Live Chat Room</a>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <span className="footer-col-header">CORE TECH</span>
+              <div className="footer-link-list">
+                <span>React · Vite · Next</span>
+                <span>GSAP · Framer Motion</span>
+                <span>Tailwind CSS 4</span>
+                <span>Node.js · REST APIs</span>
+                <span>Three.js / WebGL</span>
+              </div>
+            </div>
+
+            <div className="footer-col">
+              <span className="footer-col-header">CONNECT</span>
+              <div className="footer-link-list">
+                <a href="mailto:rakhafadilahriyadi@gmail.com">rakhafadilahriyadi@gmail.com</a>
+                <a href="https://wa.me/6282111762085" target="_blank" rel="noreferrer">
+                  +62 821-1176-2085
+                </a>
+              </div>
+              <div className="footer-social-row">
+                {[
+                  { href: "https://github.com/RakhaFR/", icon: "/ui/img/github-icon.png", name: "GitHub" },
+                  { href: "https://discord.com/users/1274191390246440981", icon: "/ui/img/discord-icon.svg", name: "Discord" },
+                  { href: "https://www.instagram.com/bang_r1yad1/", icon: "/ui/img/instagram-icon.svg", name: "Instagram" },
+                  { href: "http://tiktok.com/@xzearty_", icon: "/ui/img/tiktok-icon.svg", name: "TikTok" },
+                  { href: "https://lynk.id/bangriyadi/s/z6l332ojeqrg", icon: "/ui/img/lynkId-icon.png", name: "LynkId" },
+                ].map((s, idx) => (
+                  <a
+                    key={idx}
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="footer-social-item"
+                    title={s.name}
+                  >
+                    <img src={s.icon} alt={s.name} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Giant Hero Brand Wordmark */}
+          <div className="footer-brand-marquee" aria-hidden="true">
+            <span className="footer-giant-text">RAKHA</span>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="footer-bottom-bar">
+          <div className="footer-bottom-inner">
+            <p>© 2026 Rakha Fadilah Riyadi — Bogor, West Java</p>
+            <div className="footer-bottom-tech">
+              <span>Code as craft</span>
+              <span>·</span>
+              <button
+                type="button"
+                className="footer-back-to-top"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              >
+                Top ↑
+              </button>
+            </div>
           </div>
         </div>
       </footer>
