@@ -3,10 +3,10 @@ import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import * as THREE from "three";
 import { DirectionAwareSelection } from "./components/DirectionAwareSelection";
 import { HoverImageLinks } from "./components/HoverImageLinks";
 import { StackingSkillCards } from "./components/StackingSkillCards";
+import { Galaxy } from "./components/Galaxy";
 import "../style.css";
 import "./animations.css";
 
@@ -379,7 +379,6 @@ export default function App() {
   const [lastSentTime, setLastSentTime] = useState(0);
 
   const appRef = useRef(null);
-  const hero3DRef = useRef(null);
   const mouseGlowRef = useRef(null);
   const hscrollWrapRef = useRef(null);
   const hscrollInnerRef = useRef(null);
@@ -412,135 +411,6 @@ export default function App() {
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Three.js Interactive Particle Background
-  useEffect(() => {
-    const container = hero3DRef.current;
-    if (!container) return;
-
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    const particlesCount = 1800;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particlesCount * 3);
-    const colors = new Float32Array(particlesCount * 3);
-    const color1 = new THREE.Color("#BAFF4F");
-    const color2 = new THREE.Color("#ffffff");
-    const color3 = new THREE.Color("#80ffaa");
-
-    for (let i = 0; i < particlesCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 16;
-      positions[i + 1] = (Math.random() - 0.5) * 14;
-      positions[i + 2] = (Math.random() - 0.5) * 12;
-
-      const rand = Math.random();
-      let mixedColor;
-      if (rand < 0.4) {
-        mixedColor = color1.clone().lerp(color3, Math.random() * 0.5);
-      } else {
-        mixedColor = color2.clone().lerp(color1, Math.random() * 0.3);
-      }
-      colors[i] = mixedColor.r;
-      colors[i + 1] = mixedColor.g;
-      colors[i + 2] = mixedColor.b;
-    }
-
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-    const canvas = document.createElement("canvas");
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext("2d");
-    const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    grad.addColorStop(0, "rgba(255, 255, 255, 1)");
-    grad.addColorStop(0.2, "rgba(255, 255, 255, 0.9)");
-    grad.addColorStop(0.5, "rgba(186, 255, 79, 0.6)");
-    grad.addColorStop(0.8, "rgba(186, 255, 79, 0.15)");
-    grad.addColorStop(1, "rgba(0, 0, 0, 0)");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 32, 32);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    const material = new THREE.PointsMaterial({
-      size: 0.13,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.95,
-      map: texture,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    const handleMouseMove = (e) => {
-      const halfW = window.innerWidth / 2;
-      const halfH = window.innerHeight / 2;
-      mouseX = (e.clientX - halfW) / halfW;
-      mouseY = (e.clientY - halfH) / halfH;
-    };
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    const clock = new THREE.Clock();
-    let frameId;
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
-
-      // Cosmic ambient orbit
-      points.rotation.y = elapsedTime * 0.025;
-      points.rotation.x = elapsedTime * 0.012;
-
-      // Smooth mouse parallax easing
-      targetX += (mouseX - targetX) * 0.04;
-      targetY += (mouseY - targetY) * 0.04;
-
-      camera.position.x = targetX * 1.5;
-      camera.position.y = -targetY * 1.2;
-      camera.lookAt(0, 0, 0);
-
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    const onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("resize", onResize);
-      geometry.dispose();
-      material.dispose();
-      texture.dispose();
-      renderer.dispose();
-      while (container.firstChild) {
-        container.removeChild(container.firstChild);
-      }
     };
   }, []);
 
@@ -1099,7 +969,22 @@ export default function App() {
 
       {/* ── Home (100x Lebih Hidup & Sinematik) ────── */}
       <section className="home-content full" id="home-content">
-        <div id="hero-3d-container" ref={hero3DRef}></div>
+        <div id="hero-3d-container">
+          <Galaxy
+            transparent={true}
+            starSpeed={0.5}
+            speed={1.0}
+            density={1.2}
+            starSize={1.1}
+            glowIntensity={0.4}
+            twinkleIntensity={0.6}
+            mouseInteraction={true}
+            mouseRepulsion={true}
+            repulsionStrength={2.5}
+            clickWarp={true}
+            starColors={["#BAFF4F", "#ffffff", "#80ffaa", "#d4ff70"]}
+          />
+        </div>
 
         {/* Ambient background mesh orbs */}
         <div className="hero-ambient-mesh" aria-hidden="true">
