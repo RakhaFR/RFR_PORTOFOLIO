@@ -112,8 +112,20 @@ export function HoverImageLinks({ projects }) {
 
               <div className="link-item-right">
                 <span className="link-tag-pill">{project.tag}</span>
-                <div className="link-arrow-circle">
-                  <span className="material-symbols-outlined">arrow_forward</span>
+                <div className="link-arrow-circle" aria-hidden="true">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
                 </div>
               </div>
 

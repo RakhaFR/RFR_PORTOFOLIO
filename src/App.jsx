@@ -715,12 +715,11 @@ export default function App() {
       // ── 1. Hero Cinematic Entrance Timeline ──────────────────
       const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
       heroTl
-        .from(".hero-badge", { y: -30, opacity: 0, duration: 0.8 }, 0.1)
         .fromTo(
           ".hero-title-word",
           { yPercent: 120, opacity: 0 },
           { yPercent: 0, opacity: 1, stagger: 0.14, duration: 1.1, ease: "power4.out" },
-          0.2
+          0.1
         )
         .from(".home-content p", { y: 25, opacity: 0, duration: 0.8 }, 0.5)
         .from(".btn-box a", { y: 25, opacity: 0, stagger: 0.1, duration: 0.6 }, 0.7)
@@ -1115,11 +1114,6 @@ export default function App() {
 
         {/* Floating Mini IDE Windows */}
         <FloatingCodeWindows />
-
-        <div className="hero-badge">
-          <span className="badge-dot"></span>
-          <span>Bogor, West Java</span>
-        </div>
 
         <div className="content">
           <h1>

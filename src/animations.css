@@ -930,10 +930,14 @@
   background: transparent;
 }
 
-.link-arrow-circle span {
+.link-arrow-circle span,
+.link-arrow-circle svg {
+  width: 2rem;
+  height: 2rem;
   font-size: 2.2rem;
   color: #111411;
-  transition: transform 0.3s ease;
+  stroke: #111411;
+  transition: transform 0.3s ease, stroke 0.3s ease, color 0.3s ease;
 }
 
 .hover-link-item:hover .link-arrow-circle {
@@ -942,8 +946,10 @@
   transform: scale(1.08);
 }
 
-.hover-link-item:hover .link-arrow-circle span {
+.hover-link-item:hover .link-arrow-circle span,
+.hover-link-item:hover .link-arrow-circle svg {
   color: #BAFF4F;
+  stroke: #BAFF4F;
   transform: translate(2px, -2px) rotate(-45deg);
 }
 
