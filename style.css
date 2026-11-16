@@ -1208,7 +1208,7 @@ button { font-family:var(--sans); cursor:pointer; }
 
   /* About */
   .about-inner { grid-template-columns: 1fr; gap: 5rem; }
-  .about-right { display: none; } /* sembunyikan grid foto di tablet, cukup foto kecil di sub-main */
+  .about-right { display: none; }
   .sub-main h2 { font-size: clamp(3.2rem, 5vw, 5rem); }
   .about-stats { gap: 3rem; }
 
@@ -1230,7 +1230,7 @@ button { font-family:var(--sans); cursor:pointer; }
   .contact-cards { grid-template-columns: repeat(2, 1fr); }
 
   /* Footer */
-  .footer { padding: 2.5rem 5%; }
+  .footer-top-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1241,7 +1241,7 @@ button { font-family:var(--sans); cursor:pointer; }
   section { padding: 8rem 4%; }
   section.full { min-height: auto; padding: 9rem 4% 7rem; }
 
-  /* Marquee – font lebih kecil di mobile */
+  /* Marquee */
   .marquee-track span {
     font-size: clamp(3.5rem, 12vw, 6rem);
     padding: 0 4vw;
@@ -1294,14 +1294,22 @@ button { font-family:var(--sans); cursor:pointer; }
   .thumb-grid { grid-template-columns: 1fr 1fr; }
   .thumb .overlay h3 { font-size: 1.3rem; }
 
-  /* Skills */
+  /* Skills (old grid) */
   .skill-row { grid-template-columns: 1fr; gap: 1px; }
   .skill-card { padding: 2.5rem 2rem; }
 
   /* Certificate */
   .cv-medal { flex-direction: column; align-items: center; padding: 0 1rem; }
   .cv-medal [class^="box-medal"] { padding: 2.4rem 2rem; }
-  .img-medal img { height: 180px; }
+  .cert-visual-wrapper { height: 180px; }
+  .cert-modal-dialog { max-width: calc(100vw - 2rem); border-radius: 16px; }
+  .cert-modal-top { padding: 1.6rem 1.8rem 1.2rem; }
+  .cert-modal-tabs { padding: 1rem 1.8rem 0; gap: 0.8rem; }
+  .cert-modal-image-display { padding: 1.4rem 1.8rem; max-height: 42vh; }
+  .cert-modal-image-display img { max-height: 38vh; }
+  .cert-modal-footer { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 1.4rem 1.8rem 1.8rem; }
+  .cert-modal-footer p { font-size: 1.25rem; }
+  .cert-modal-title-box h3 { font-size: 1.8rem; }
   .medal-h2 h2 { font-size: 1.6rem; }
 
   /* Portfolio */
@@ -1324,8 +1332,10 @@ button { font-family:var(--sans); cursor:pointer; }
   .heading { font-size: clamp(3rem, 9vw, 4.5rem); margin-bottom: 4rem; }
 
   /* Footer */
-  .footer { flex-direction: column; text-align: center; gap: 1.5rem; padding: 2.5rem 4%; }
-  .footer-links { justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .footer-top-grid { grid-template-columns: 1fr; gap: 2.8rem; }
+  .footer-bottom-inner { flex-direction: column; text-align: center; gap: 1rem; }
+  .footer-bottom-tech { justify-content: center; gap: 1.2rem; flex-wrap: wrap; }
+  .footer-brand-col .brand-bio { max-width: 100%; }
 
   /* Navbar */
   .header { height: 5.6rem; }
@@ -1369,4 +1379,13 @@ button { font-family:var(--sans); cursor:pointer; }
   .contact-handle { font-size: 1.4rem; }
 
   .marquee-track span { font-size: clamp(3rem, 14vw, 5rem); }
+
+  /* Certificate modal full-screen feel on tiny phones */
+  .cert-modal-overlay { padding: 0.8rem; }
+  .cert-modal-image-display { max-height: 36vh; }
+  .cert-modal-image-display img { max-height: 32vh; }
+  .cert-tab-btn { font-size: 1.1rem; padding: 0.5rem 1.2rem; }
+
+  /* Footer wordmark scale down */
+  .footer-giant-text { font-size: clamp(18vw, 25vw, 20rem); }
 }

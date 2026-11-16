@@ -12,9 +12,10 @@ const formatTime = (seconds) => {
 
 const SNAP_THRESHOLD = 160;
 const SNAP_PAD = 24;
-const PILL_W = 270;
+// Approximate dimensions (match CSS; mobile uses smaller via media query)
+const PILL_W = typeof window !== "undefined" && window.innerWidth <= 640 ? 240 : 270;
 const PILL_H = 58;
-const CARD_W = 310;
+const CARD_W = typeof window !== "undefined" && window.innerWidth <= 640 ? 290 : 310;
 const CARD_H = 300;
 
 export function SpotifyPlayer() {
